@@ -1,5 +1,5 @@
 // sw.js — Osaka Trip PWA Service Worker
-const CACHE_NAME = 'osaka-trip-v8';
+const CACHE_NAME = 'osaka-trip-v10';
 const ASSETS = [
   './',
   './index.html',
