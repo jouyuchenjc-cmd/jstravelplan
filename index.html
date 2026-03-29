@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Osaka Trip">
+<link rel="apple-touch-icon" href="icon.png">
 <meta name="theme-color" content="#f3eee8">
 <title>Osaka Trip</title>
 <link rel="manifest" href="manifest.json">
@@ -187,12 +188,16 @@ body::before{
 .wx-right-info{text-align:center}
 .wx-icon-lbl{font-size:13px;font-weight:700;color:var(--ink2)}
 .wx-hilo{font-size:11px;color:var(--ink3);margin-top:4px}
-.wx-row{display:flex;gap:6px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(77,88,111,0.1)}
-.wx-col{flex:1;text-align:center}
-.wc-name{font-size:9px;color:var(--ink3)}
-.wc-icon{font-size:11px;font-weight:700;color:var(--ink2);margin:3px 0;opacity:.7}
-.wc-hi{font-size:13px;font-weight:700;color:var(--ink)}
-.wc-lo{font-size:10px;color:var(--ink3)}
+.wx-big-emoji{font-size:48px;line-height:1}
+.wx-row{display:flex;flex-direction:column;gap:0;margin-top:14px;padding-top:14px;border-top:1px solid rgba(77,88,111,0.1)}
+.wx-col{display:flex;align-items:center;gap:10px;padding:7px 2px;border-bottom:1px solid rgba(77,88,111,0.07)}
+.wx-col:last-child{border-bottom:none}
+.wc-name{font-size:12px;color:var(--ink3);min-width:26px}
+.wc-emoji{font-size:18px;min-width:28px;text-align:center}
+.wc-desc{font-size:11px;color:var(--ink2);flex:1;opacity:.75}
+.wc-temps{margin-left:auto;text-align:right}
+.wc-hi{font-size:14px;font-weight:700;color:var(--ink);display:inline}
+.wc-lo{font-size:11px;color:var(--ink3);display:inline;margin-left:4px}
 .wx-loading{text-align:center;padding:40px;color:var(--ink3);font-size:13px}
 
 /* ══ COST ══ */
@@ -243,6 +248,45 @@ body::before{
 .save-msg.err{color:#c07070}
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* cost records */
+.cost-records{margin-top:12px}
+.cr-section-lbl{font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin:14px 0 8px}
+.cr-item{
+  background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-sm);
+  padding:11px 13px;margin-bottom:8px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:0 1px 6px rgba(43,36,32,0.05);
+  transition:opacity .2s;
+}
+.cr-item.hidden-record{opacity:.38}
+.cr-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cr-name{font-size:14px;font-weight:700;color:var(--ink);flex:1}
+.cr-amount{font-size:13px;font-weight:700;color:var(--ink2)}
+.cr-meta{font-size:10px;color:var(--ink3);margin-top:3px}
+.cr-actions{display:flex;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(77,88,111,0.08)}
+.cr-btn{
+  background:rgba(77,88,111,0.07);border:1px solid rgba(77,88,111,0.12);
+  border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;
+  color:var(--ink2);cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;
+  transition:all .15s;
+}
+.cr-btn:active{transform:scale(.94)}
+.cr-btn.del{color:#c07070;background:rgba(192,112,112,0.08);border-color:rgba(192,112,112,0.2)}
+.cr-edit-form{margin-top:8px;padding-top:8px;border-top:1px solid rgba(77,88,111,0.08)}
+.cr-edit-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}
+.cr-ef-in{
+  width:100%;background:rgba(243,238,232,0.7);border:1px solid rgba(77,88,111,0.15);
+  border-radius:8px;padding:7px 10px;color:var(--ink);font-size:13px;
+  font-family:'Zen Maru Gothic',sans-serif;outline:none;
+}
+.cr-ef-in:focus{border-color:var(--accent)}
+.cr-save-btn{
+  width:100%;background:var(--accent);border:none;border-radius:8px;
+  padding:8px;color:#fff;font-size:13px;font-weight:700;
+  font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;margin-top:4px;
+}
+.cr-empty{text-align:center;padding:24px;color:var(--ink3);font-size:12px}
 
 /* update toast */
 .update-toast{
@@ -399,15 +443,38 @@ body::before{
     <div class="s-title">Cost</div>
   </div>
   <div class="s-body">
+    <!-- 總花費卡 -->
     <div class="cost-total-card">
-      <div>
+      <div style="flex:1">
         <div class="ct-label">本次旅行總花費</div>
         <div class="ct-amount" id="totalTWD">NT$ 0</div>
-        <div class="ct-sub">累計已記錄</div>
+        <div class="ct-sub" id="totalJPY">¥ 0</div>
       </div>
-      <div class="ct-right">
-        <div class="ct-label">外幣合計</div>
-        <div class="ct-jpy" id="totalJPY">¥ 0</div>
+      <div style="display:flex;flex-direction:column;gap:8px;text-align:right">
+        <div>
+          <div class="ct-label">現金花費</div>
+          <div class="ct-jpy" id="totalCashJPY">¥ 0</div>
+        </div>
+        <div>
+          <div class="ct-label">刷卡花費</div>
+          <div class="ct-jpy" id="totalCardJPY">¥ 0</div>
+        </div>
+      </div>
+    </div>
+    <!-- 攜帶現金卡（設定後自動儲存） -->
+    <div class="cost-total-card" style="margin-bottom:12px;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+        <div class="ct-label" style="margin:0">攜帶現金預算 (¥)</div>
+        <div style="font-size:10px;color:var(--ink4)" id="cashSaveHint"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;width:100%">
+        <input id="cashBudgetJPY" type="number" placeholder="出發前填入攜帶日幣"
+          style="flex:1;background:rgba(243,238,232,0.7);border:1px solid rgba(77,88,111,0.15);border-radius:8px;padding:8px 12px;font-size:15px;font-family:'Zen Maru Gothic',sans-serif;outline:none;color:var(--ink);-webkit-appearance:none"
+          oninput="onCashBudgetInput()">
+        <div style="text-align:right;flex-shrink:0">
+          <div class="ct-label">現金剩餘</div>
+          <div id="cashRemain" style="font-size:18px;font-weight:700;color:var(--ink)">—</div>
+        </div>
       </div>
     </div>
     <div class="cost-wrap">
@@ -444,6 +511,8 @@ body::before{
       <button class="save-btn" id="saveBtn" onclick="saveCost()">Save to Notion</button>
       <div class="save-msg" id="saveMsg"></div>
     </div>
+    <!-- 花費紀錄列表 -->
+    <div class="cost-records" id="costRecordsList"></div>
   </div>
 </div>
 
@@ -454,6 +523,7 @@ body::before{
 
 <script>
 // ── CONFIG ────────────────────────────────────────────
+// Notion proxy — 填入你的 Cloudflare Worker URL（見下方 worker.js）
 const NOTION_WORKER_URL = 'https://traveluse.jouyu-chen-jc.workers.dev';
 const NOTION_DB_ID = '14f85e19d1c681adb0aded1cb7b14eab';
 
@@ -564,7 +634,7 @@ function renderDay(key){
 
 // ── WEATHER ──────────────────────────────────────────
 const WD={0:'晴天',1:'晴朗',2:'多雲',3:'陰天',45:'有霧',48:'凍霧',51:'毛毛雨',53:'毛毛雨',55:'毛毛雨',61:'小雨',63:'中雨',65:'大雨',71:'小雪',73:'中雪',75:'大雪',80:'陣雨',81:'陣雨',82:'大陣雨',95:'雷雨',96:'雷雨',99:'強雷雨'};
-const WI={0:'晴',1:'晴',2:'多雲',3:'陰',45:'霧',48:'霧',51:'雨',53:'雨',55:'雨',61:'雨',63:'雨',65:'大雨',71:'雪',73:'雪',75:'大雪',80:'陣雨',81:'陣雨',82:'大陣雨',95:'雷',96:'雷',99:'雷'};
+const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
 const DZ=['日','一','二','三','四','五','六'];
 let wxBusy=false;
 
@@ -598,12 +668,13 @@ async function fetchWx(lat,lng,name){
   if(wxBusy)return; wxBusy=true;
   document.getElementById('wxBox').innerHTML='<div class="wx-loading">載入中…</div>';
   try{
-    const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=7`);
+    const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=7&models=jma_seamless`);
     const d=await r.json();
     const cur=d.current,day=d.daily,code=cur.weathercode;
     const fc=[0,1,2,3,4,5,6].map(i=>{
       const dt=new Date(day.time[i]);
-      return`<div class="wx-col"><div class="wc-name">${i===0?'今天':DZ[dt.getDay()]}</div><div class="wc-icon">${WI[day.weathercode[i]]||'-'}</div><div class="wc-hi">${Math.round(day.temperature_2m_max[i])}°</div><div class="wc-lo">${Math.round(day.temperature_2m_min[i])}°</div></div>`;
+      const lbl=i===0?'今天':i===1?'明天':DZ[dt.getDay()];
+      return`<div class="wx-col"><div class="wc-name">${lbl}</div><div class="wc-emoji">${WI[day.weathercode[i]]||'—'}</div><div class="wc-desc">${WD[day.weathercode[i]]||''}</div><div class="wc-temps"><span class="wc-hi">${Math.round(day.temperature_2m_max[i])}°</span><span class="wc-lo">${Math.round(day.temperature_2m_min[i])}°</span></div></div>`;
     }).join('');
     document.getElementById('wxBox').innerHTML=`<div class="wx-now">
       <div class="wx-top">
@@ -613,7 +684,7 @@ async function fetchWx(lat,lng,name){
           <div class="wx-desc-txt">${WD[code]||''}</div>
         </div>
         <div class="wx-right-info">
-          <div class="wx-icon-lbl">${WI[code]||''}</div>
+          <div class="wx-big-emoji">${WI[code]||''}</div>
           <div class="wx-hilo">↑${Math.round(day.temperature_2m_max[0])}° ↓${Math.round(day.temperature_2m_min[0])}°</div>
         </div>
       </div>
@@ -625,18 +696,128 @@ async function fetchWx(lat,lng,name){
 }
 
 // ── COST ─────────────────────────────────────────────
+
+
 let costRecords=JSON.parse(localStorage.getItem('osaka_costs')||'[]');
+
+function saveCostLocal(){localStorage.setItem('osaka_costs',JSON.stringify(costRecords));}
+
 function loadCostTotals(){
-  let tw=0,jp=0;
-  costRecords.forEach(r=>{tw+=(r.twd||0);jp+=(r.jpy||0);});
+  let tw=0,jp=0,cashJP=0,cardJP=0;
+  costRecords.filter(r=>!r.hidden).forEach(r=>{
+    tw+=(r.twd||0);jp+=(r.jpy||0);
+    if((r.pay||'Cash')==='Cash') cashJP+=(r.jpy||0);
+    else cardJP+=(r.jpy||0);
+  });
   document.getElementById('totalTWD').textContent=`NT$ ${tw.toLocaleString()}`;
   document.getElementById('totalJPY').textContent=`¥ ${jp.toLocaleString()}`;
+  document.getElementById('totalCashJPY').textContent=`¥ ${cashJP.toLocaleString()}`;
+  document.getElementById('totalCardJPY').textContent=`¥ ${cardJP.toLocaleString()}`;
+  // 還原儲存的現金預算
+  const saved=localStorage.getItem('osaka_cash_budget');
+  const budgetEl=document.getElementById('cashBudgetJPY');
+  if(saved&&budgetEl&&!budgetEl.value) budgetEl.value=saved;
+  updateCashDisplay(cashJP);
+  renderCostRecords();
 }
+let cashSaveTimer=null;
+function onCashBudgetInput(){
+  updateCashDisplay();
+  // 停止輸入 800ms 後自動儲存
+  clearTimeout(cashSaveTimer);
+  cashSaveTimer=setTimeout(()=>{
+    const val=document.getElementById('cashBudgetJPY').value;
+    localStorage.setItem('osaka_cash_budget', val);
+    const hint=document.getElementById('cashSaveHint');
+    if(hint){hint.textContent='已儲存';setTimeout(()=>{hint.textContent='';},1500);}
+  },800);
+}
+function updateCashDisplay(cashUsed){
+  const budgetEl=document.getElementById('cashBudgetJPY');
+  const budget=parseFloat(budgetEl?.value)||0;
+  const used=cashUsed!=null?cashUsed:(() => {
+    let c=0; costRecords.filter(r=>!r.hidden&&(r.pay||'Cash')==='Cash').forEach(r=>c+=(r.jpy||0)); return c;
+  })();
+  const remainEl=document.getElementById('cashRemain');
+  if(!remainEl)return;
+  if(!budget){remainEl.textContent='—';remainEl.style.color='var(--ink)';return;}
+  const rem=budget-used;
+  remainEl.textContent=`¥ ${rem.toLocaleString()}`;
+  remainEl.style.color=rem<0?'#c07070':rem<5000?'#c0a070':'var(--ink)';
+}
+
+function renderCostRecords(){
+  const el=document.getElementById('costRecordsList');
+  if(!el)return;
+  if(!costRecords.length){el.innerHTML='<div class="cr-empty">尚無紀錄</div>';return;}
+  // 按天分組
+  const groups={};
+  costRecords.forEach((r,i)=>{
+    if(!groups[r.day])groups[r.day]=[]; groups[r.day].push({...r,_idx:i});
+  });
+  const dayOrder=['第01天','第02天','第03天','第04天','第05天','第06天'];
+  let html='';
+  for(const dk of dayOrder){
+    if(!groups[dk])continue;
+    html+=`<div class="cr-section-lbl">${dk}</div>`;
+    groups[dk].forEach(r=>{
+      const hidden=r.hidden?'hidden-record':'';
+      const eyeBtn=r.hidden?'顯示':'隱藏';
+      html+=`<div class="cr-item ${hidden}" id="cr-${r._idx}">
+        <div class="cr-top">
+          <div class="cr-name">${escH(r.name)}</div>
+          <div class="cr-amount">${r.twd?'NT$ '+r.twd.toLocaleString():''}${r.jpy?' · ¥'+r.jpy.toLocaleString():''}</div>
+        </div>
+        <div class="cr-meta">${r.pay||''}${r.note?' · '+escH(r.note):''}</div>
+        <div class="cr-actions">
+          <button class="cr-btn" onclick="toggleEditRecord(${r._idx})">編輯</button>
+          <button class="cr-btn" onclick="toggleHideRecord(${r._idx})">${eyeBtn}</button>
+          <button class="cr-btn del" onclick="deleteRecord(${r._idx})">刪除</button>
+        </div>
+        <div class="cr-edit-form" id="cef-${r._idx}" style="display:none">
+          <div class="cr-edit-row">
+            <input class="cr-ef-in" id="cef-name-${r._idx}" value="${escH(r.name)}" placeholder="名稱">
+            <input class="cr-ef-in" id="cef-note-${r._idx}" value="${escH(r.note||'')}" placeholder="備註">
+          </div>
+          <div class="cr-edit-row">
+            <input class="cr-ef-in" id="cef-jpy-${r._idx}" type="number" value="${r.jpy||''}" placeholder="¥">
+            <input class="cr-ef-in" id="cef-twd-${r._idx}" type="number" value="${r.twd||''}" placeholder="NT$">
+          </div>
+          <button class="cr-save-btn" onclick="saveEditRecord(${r._idx})">儲存修改</button>
+        </div>
+      </div>`;
+    });
+  }
+  el.innerHTML=html;
+}
+function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+function toggleEditRecord(idx){
+  const f=document.getElementById(`cef-${idx}`);
+  if(f)f.style.display=f.style.display==='none'?'block':'none';
+}
+function saveEditRecord(idx){
+  const r=costRecords[idx]; if(!r)return;
+  r.name=document.getElementById(`cef-name-${idx}`).value.trim()||r.name;
+  r.note=document.getElementById(`cef-note-${idx}`).value.trim();
+  r.jpy=parseFloat(document.getElementById(`cef-jpy-${idx}`).value)||0;
+  r.twd=parseFloat(document.getElementById(`cef-twd-${idx}`).value)||0;
+  saveCostLocal(); loadCostTotals();
+}
+function toggleHideRecord(idx){
+  const r=costRecords[idx]; if(!r)return;
+  r.hidden=!r.hidden; saveCostLocal(); loadCostTotals();
+}
+function deleteRecord(idx){
+  if(!confirm('確定要刪除這筆紀錄嗎？'))return;
+  costRecords.splice(idx,1); saveCostLocal(); loadCostTotals();
+}
+
 function calcTwd(){
   const j=parseFloat(document.getElementById('cf-jpy').value)||0;
   const r=parseFloat(document.getElementById('cf-rate').value)||0.21;
   if(j>0) document.getElementById('cf-twd').value=Math.round(j*r);
 }
+
 async function saveCost(){
   const name=document.getElementById('cf-name').value.trim();
   if(!name){showMsg('請填寫名稱',true);return;}
@@ -644,15 +825,17 @@ async function saveCost(){
   const jpy=parseFloat(document.getElementById('cf-jpy').value)||null;
   const twd=parseFloat(document.getElementById('cf-twd').value)||null;
   const day=document.getElementById('cf-day').value;
+  const pay=document.getElementById('cf-pay').value;
   const note=document.getElementById('cf-note').value.trim();
   const dateMap={'第01天':'2026-04-11','第02天':'2026-04-12','第03天':'2026-04-13','第04天':'2026-04-14','第05天':'2026-04-15','第06天':'2026-04-16'};
   const btn=document.getElementById('saveBtn');
   btn.disabled=true;btn.innerHTML='<span class="spin"></span> 儲存中…';showMsg('');
+
   // 本地記錄
-  costRecords.push({name,jpy:jpy||0,twd:twd||0,day,ts:Date.now()});
-  localStorage.setItem('osaka_costs',JSON.stringify(costRecords));
-  loadCostTotals();
-  // Notion
+  costRecords.push({name,jpy:jpy||0,twd:twd||0,day,pay,note,ts:Date.now()});
+  saveCostLocal(); loadCostTotals();
+
+  // Notion via Worker proxy（token 存在 Worker 環境變數，不外露）
   const payload={
     parent:{database_id:NOTION_DB_ID},
     properties:{
@@ -668,10 +851,15 @@ async function saveCost(){
   if(jpy!==null) payload.properties['開銷紀錄 (外幣)']={number:jpy};
   if(twd!==null) payload.properties['開銷紀錄（台幣）']={number:twd};
   try{
-    const res=await fetch(NOTION_WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'create',payload})});
+    const res=await fetch(NOTION_WORKER_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'create',payload})
+    });
     if(!res.ok) throw new Error(await res.text());
-    showMsg('已儲存到 Notion！');
+    showMsg('✓ 已儲存到 Notion！');
   }catch(e){showMsg('本地已記錄，Notion 同步失敗',true);}
+
   btn.disabled=false;btn.textContent='Save to Notion';
   ['cf-name','cf-jpy','cf-twd','cf-note'].forEach(id=>document.getElementById(id).value='');
 }
