@@ -26,7 +26,8 @@
   --r: 20px; --r-sm: 13px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden}
+/* ── 藍色底部 bug 根治：html/body/app 全部鎖定背景色，screen 不加 padding-bottom ── */
+html,body{height:100%;overflow:hidden;background:#f3eee8}
 body{
   font-family:'Zen Maru Gothic','Noto Sans TC',sans-serif;
   background:var(--bg);color:var(--ink);
@@ -38,25 +39,24 @@ body::before{
     radial-gradient(ellipse 60% 40% at 80% 10%,rgba(207,168,163,0.15) 0%,transparent 70%),
     radial-gradient(ellipse 50% 60% at 10% 80%,rgba(77,88,111,0.07) 0%,transparent 70%);
 }
-#app{position:relative;z-index:1;height:100dvh;overflow:hidden}
+#app{position:relative;z-index:1;height:100dvh;overflow:hidden;background:var(--bg)}
 .screen{
   position:absolute;inset:0;display:flex;flex-direction:column;
-  padding-bottom:env(safe-area-inset-bottom);
+  /* 不在 screen 上加 padding-bottom，各頁面自行處理 safe area */
   opacity:0;pointer-events:none;transform:translateY(18px);
   transition:opacity .25s ease,transform .25s ease;overflow:hidden;
+  background:var(--bg);
 }
 .screen.active{opacity:1;pointer-events:all;transform:translateY(0)}
 
 /* ══ HOME ══ */
-#home{justify-content:center;align-items:center;padding:24px 24px;gap:0}
+#home{justify-content:center;align-items:center;padding:24px 24px;gap:0;
+  padding-bottom:calc(24px + env(safe-area-inset-bottom))}
 .home-ill{
   width:186px;height:186px;flex-shrink:0;
   margin-top:calc(env(safe-area-inset-top) + 4px);
 }
-.home-ill img{
-  width:100%;height:100%;object-fit:contain;
-  /* PNG has transparent bg — fits perfectly */
-}
+.home-ill img{width:100%;height:100%;object-fit:contain}
 .home-meta{text-align:center;margin-top:8px}
 .home-dates{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--ink2);text-transform:uppercase}
 .home-sub{font-size:10px;color:var(--ink3);margin-top:2px;letter-spacing:2px}
@@ -95,7 +95,8 @@ body::before{
 }
 .back-btn:active{transform:scale(.9)}
 .s-title{font-size:17px;font-weight:700;color:var(--ink)}
-.s-body{flex:1;overflow-y:auto;padding:12px 16px 28px}
+/* safe area 改在 s-body 底部 padding 處理 */
+.s-body{flex:1;overflow-y:auto;padding:12px 16px calc(28px + env(safe-area-inset-bottom))}
 .s-body::-webkit-scrollbar{display:none}
 
 /* ══ FLIGHT ══ */
@@ -113,6 +114,7 @@ body::before{
 .fc-mid{flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
 .fc-line{display:flex;align-items:center;gap:6px;width:100%}
 .fc-dash{flex:1;height:1px;background:rgba(77,88,111,0.18)}
+/* CSS rotate 最穩，不依賴 SVG transform */
 .fc-plane{width:28px;height:28px;flex-shrink:0;color:var(--accent2);transform:rotate(90deg)}
 .fc-fno{font-size:12px;font-weight:700;color:var(--accent2)}
 .fc-times{display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid rgba(77,88,111,0.1)}
@@ -233,7 +235,8 @@ body::before{
 .wx-row{display:flex;flex-direction:column;gap:0;margin-top:14px;padding-top:14px;border-top:1px solid rgba(77,88,111,0.1)}
 .wx-col{display:flex;align-items:center;gap:10px;padding:7px 2px;border-bottom:1px solid rgba(77,88,111,0.07)}
 .wx-col:last-child{border-bottom:none}
-.wc-name{font-size:12px;color:var(--ink3);min-width:26px}
+.wc-name{font-size:12px;color:var(--ink3);min-width:46px}
+.wc-date{font-size:10px;color:var(--ink4);margin-left:2px}
 .wc-emoji{font-size:18px;min-width:28px;text-align:center}
 .wc-desc{font-size:11px;color:var(--ink2);flex:1;opacity:.75}
 .wc-temps{margin-left:auto;text-align:right}
@@ -297,8 +300,7 @@ body::before{
   background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-sm);
   padding:11px 13px;margin-bottom:8px;
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 1px 6px rgba(43,36,32,0.05);
-  transition:opacity .2s;
+  box-shadow:0 1px 6px rgba(43,36,32,0.05);transition:opacity .2s;
 }
 .cr-item.hidden-record{opacity:.38}
 .cr-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -309,8 +311,7 @@ body::before{
 .cr-btn{
   background:rgba(77,88,111,0.07);border:1px solid rgba(77,88,111,0.12);
   border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;
-  color:var(--ink2);cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;
-  transition:all .15s;
+  color:var(--ink2);cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;transition:all .15s;
 }
 .cr-btn:active{transform:scale(.94)}
 .cr-btn.del{color:#c07070;background:rgba(192,112,112,0.08);border-color:rgba(192,112,112,0.2)}
@@ -387,7 +388,6 @@ body::before{
     <div class="s-title">Flight Info</div>
   </div>
   <div class="s-body">
-    <!-- 去程 -->
     <div class="flight-card">
       <div class="fc-tag">Outbound · 去程</div>
       <div class="fc-route">
@@ -418,7 +418,6 @@ body::before{
         <div class="fc-t"><div class="fc-t-lbl">Duration</div><div class="fc-t-val">3h 50m</div><div class="fc-t-date">China Airlines</div></div>
       </div>
     </div>
-    <!-- 回程 -->
     <div class="flight-card">
       <div class="fc-tag">Return · 回程</div>
       <div class="fc-route">
@@ -484,7 +483,6 @@ body::before{
     <div class="s-title">Cost</div>
   </div>
   <div class="s-body">
-    <!-- 總花費卡 -->
     <div class="cost-total-card">
       <div style="flex:1">
         <div class="ct-label">本次旅行總花費</div>
@@ -502,19 +500,19 @@ body::before{
         </div>
       </div>
     </div>
-    <!-- 攜帶現金卡（設定後自動儲存） -->
+    <!-- 現金預算卡：輸入框固定寬度，剩餘欄不被擠 -->
     <div class="cost-total-card" style="margin-bottom:12px;flex-direction:column;gap:10px">
       <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
         <div class="ct-label" style="margin:0">攜帶現金預算 (¥)</div>
         <div style="font-size:10px;color:var(--ink4)" id="cashSaveHint"></div>
       </div>
       <div style="display:flex;align-items:center;gap:10px;width:100%">
-        <input id="cashBudgetJPY" type="number" placeholder="出發前填入攜帶日幣"
-          style="flex:1;background:rgba(243,238,232,0.7);border:1px solid rgba(77,88,111,0.15);border-radius:8px;padding:8px 12px;font-size:15px;font-family:'Zen Maru Gothic',sans-serif;outline:none;color:var(--ink);-webkit-appearance:none"
+        <input id="cashBudgetJPY" type="number" placeholder="攜帶日幣"
+          style="width:0;flex:1;min-width:0;background:rgba(243,238,232,0.7);border:1px solid rgba(77,88,111,0.15);border-radius:8px;padding:8px 10px;font-size:13px;font-family:'Zen Maru Gothic',sans-serif;outline:none;color:var(--ink);-webkit-appearance:none"
           oninput="onCashBudgetInput()">
-        <div style="text-align:right;flex-shrink:0">
+        <div style="text-align:right;flex-shrink:0;white-space:nowrap;min-width:80px">
           <div class="ct-label">現金剩餘</div>
-          <div id="cashRemain" style="font-size:18px;font-weight:700;color:var(--ink)">—</div>
+          <div id="cashRemain" style="font-size:17px;font-weight:700;color:var(--ink)">—</div>
         </div>
       </div>
     </div>
@@ -553,25 +551,18 @@ body::before{
       <button class="save-btn" id="saveBtn" onclick="saveCost()">Save to Notion</button>
       <div class="save-msg" id="saveMsg"></div>
     </div>
-    <!-- 花費紀錄列表 -->
     <div class="cost-records" id="costRecordsList"></div>
   </div>
 </div>
 
 </div><!-- #app -->
-
-<!-- update toast -->
 <div class="update-toast" id="updateToast" onclick="applyUpdate()">有新版本，點此更新</div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────
 const NOTION_WORKER_URL = 'https://traveluse.jouyu-chen-jc.workers.dev';
 const NOTION_DB_ID = '14f85e19d1c681adb0aded1cb7b14eab';
-// 備用：直接呼叫 Notion API（Worker 失敗時自動切換）
-// 如需啟用，到 https://www.notion.so/my-integrations 取得 token 後填入
 const NOTION_DIRECT_TOKEN = '';
 
-// ── ITINERARY ─────────────────────────────────────────
 const DAYS = {
   '第01天':{date:'2026-04-11',
     overview:'KIX 抵達 → 飯店 堺筋本町 → 中崎町探索',
@@ -601,7 +592,7 @@ const DAYS = {
     overview:'舞洲海濱公園 → 返回市區午餐 → 住吉大社 → 回住宿',
     items:[
       {name:'前往舞洲海濱公園',note:'① 堺筋本町 → 中央線 → コスモスクエア（約20分）\n② コスモスクエア → 舞洲アクティブバス\n→ 舞洲スポーツアイランド（約15分）',lat:34.6636,lng:135.4354},
-      {name:'返回市區 + 午餐',note:'舞洲緑地前 → 北港観光バス 2系統（¥230 約13分）→ 桜島駅\nJRゆめ咲線 → 西九条 → 環状線 → 新今宮\n南海本線 → 住吉大社駅',lat:null,lng:null},
+      {name:'返回市區 + 午餐',note:'舞洲緑地前 → 北港観光バス 2系統（¥230 約13分）→ 桜島駅\nJRゆめ咲線 → 西九条 → 環状線 → 新今宮\n南海本線 → 住吉大社駅',busUrl:'http://hokkohbus.co.jp/route/active',lat:null,lng:null},
       {name:'住吉大社',note:'住吉大社駅から步行約3分\n太鼓橋（反橋）・住吉造本殿',lat:34.61281,lng:135.49313},
       {name:'回大阪住宿',note:'住吉大社駅 → 南海本線 → 難波\n御堂筋線 → 本町 → 中央線 → 堺筋本町',lat:34.68249,lng:135.50565},
     ]},
@@ -622,7 +613,6 @@ const DAYS = {
 };
 const DAY_ORDER=['第01天','第02天','第03天','第04天','第05天','第06天'];
 
-// ── NAV ──────────────────────────────────────────────
 function go(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -633,6 +623,37 @@ function go(id){
 
 // ── DAY ──────────────────────────────────────────────
 let activeDay='第01天';
+let arrivedSet=JSON.parse(localStorage.getItem('osaka_arrived')||'{}');
+function saveArrived(){localStorage.setItem('osaka_arrived',JSON.stringify(arrivedSet));}
+function toggleArrived(key,i){
+  arrivedSet[`${key}:${i}`]=!arrivedSet[`${key}:${i}`];
+  saveArrived(); renderDay(key);
+}
+function getUnote(key,i){return localStorage.getItem(`unote:${key}:${i}`)||'';}
+function saveUnote(key,i,val){
+  if(val.trim()) localStorage.setItem(`unote:${key}:${i}`,val);
+  else localStorage.removeItem(`unote:${key}:${i}`);
+}
+let unoteTimer=null;
+function onUnoteInput(key,i,el){
+  saveUnote(key,i,el.value);
+  const btn=document.getElementById(`utbtn:${key}:${i}`);
+  if(btn) btn.className='unote-toggle'+(el.value.trim()?' filled':'');
+  const saved=document.getElementById(`utsvd:${key}:${i}`);
+  if(saved){
+    saved.classList.add('show');
+    clearTimeout(unoteTimer);
+    unoteTimer=setTimeout(()=>saved.classList.remove('show'),1500);
+  }
+}
+function toggleUnote(key,i){
+  const wrap=document.getElementById(`utwrap:${key}:${i}`);
+  if(!wrap) return;
+  const open=wrap.style.display==='none'||!wrap.style.display;
+  wrap.style.display=open?'block':'none';
+  if(open) wrap.querySelector('textarea')?.focus();
+}
+
 function buildDayTabs(){
   const today=new Date().toISOString().slice(0,10);
   let auto=DAY_ORDER[0];
@@ -658,77 +679,31 @@ function pickDay(key){
   document.querySelector('.dt.active')?.scrollIntoView({inline:'center',block:'nearest'});
   renderDay(key);
 }
-
-// ── 已抵達 ──────────────────────────────────────────
-let arrivedSet = JSON.parse(localStorage.getItem('osaka_arrived') || '{}');
-function saveArrived(){ localStorage.setItem('osaka_arrived', JSON.stringify(arrivedSet)); }
-function toggleArrived(key, i){
-  const k = `${key}:${i}`;
-  arrivedSet[k] = !arrivedSet[k];
-  saveArrived();
-  renderDay(key);
-}
-
-// ── 隨手備注 ─────────────────────────────────────────
-function getUnote(key, i){ return localStorage.getItem(`unote:${key}:${i}`) || ''; }
-function saveUnote(key, i, val){
-  const k = `unote:${key}:${i}`;
-  if(val.trim()) localStorage.setItem(k, val);
-  else localStorage.removeItem(k);
-}
-let unoteTimer = null;
-function onUnoteInput(key, i, el){
-  saveUnote(key, i, el.value);
-  // 更新按鈕樣式
-  const btn = document.getElementById(`utbtn:${key}:${i}`);
-  if(btn) btn.className = 'unote-toggle' + (el.value.trim() ? ' filled' : '');
-  // 顯示「已儲存」提示
-  const saved = document.getElementById(`utsvd:${key}:${i}`);
-  if(saved){
-    saved.classList.add('show');
-    clearTimeout(unoteTimer);
-    unoteTimer = setTimeout(() => saved.classList.remove('show'), 1500);
-  }
-}
-function toggleUnote(key, i){
-  const wrap = document.getElementById(`utwrap:${key}:${i}`);
-  if(!wrap) return;
-  const open = wrap.style.display === 'none' || !wrap.style.display;
-  wrap.style.display = open ? 'block' : 'none';
-  if(open) wrap.querySelector('textarea')?.focus();
-}
-
 function renderDay(key){
-  const body = document.getElementById('dayBody');
-  const d = DAYS[key]; if(!d) return;
-  const DZ_r = ['日','一','二','三','四','五','六'];
-  const dt = new Date(d.date);
-  const dtLbl = `${dt.getMonth()+1}月${dt.getDate()}日（${DZ_r[dt.getDay()]}）`;
-  let html = `<div class="ov-card"><div class="ov-lbl">Overview · ${dtLbl}</div><div class="ov-text">${d.overview}</div></div>`;
-
-  const pending = [], done = [];
-  d.items.forEach((item, i) => {
-    (arrivedSet[`${key}:${i}`] ? done : pending).push({item, i});
+  const body=document.getElementById('dayBody');
+  const d=DAYS[key]; if(!d) return;
+  const DZL=['日','一','二','三','四','五','六'];
+  const dt=new Date(d.date);
+  const dtLbl=`${dt.getMonth()+1}月${dt.getDate()}日（${DZL[dt.getDay()]}）`;
+  let html=`<div class="ov-card"><div class="ov-lbl">Overview · ${dtLbl}</div><div class="ov-text">${d.overview}</div></div>`;
+  const pending=[],done=[];
+  d.items.forEach((item,i)=>{
+    (arrivedSet[`${key}:${i}`]?done:pending).push({item,i});
   });
-
-  const mkCard = ({item, i}) => {
-    const isArrived = !!arrivedSet[`${key}:${i}`];
-    const num = String(i+1).padStart(2,'0');
-    const mapBtn = item.lat
-      ? `<a class="spot-map" href="https://maps.google.com/maps?q=${item.lat},${item.lng}" target="_blank">Maps</a>`
-      : '';
-    const busBtn = item.busUrl
-      ? `<a class="spot-map" href="${item.busUrl}" target="_blank" style="margin-left:6px">Bus 時刻表</a>`
-      : '';
-    const arrivedBtn = `<span class="spot-arrived-btn" onclick="toggleArrived('${key}',${i})">${isArrived ? '↩ 取消' : '✓ 已抵達'}</span>`;
-    const uNote = getUnote(key, i);
-    const noteToggle = `<span class="unote-toggle${uNote ? ' filled' : ''}" id="utbtn:${key}:${i}" onclick="toggleUnote('${key}',${i})">${uNote ? '備注 ✎' : '+ 備注'}</span>`;
-    const noteWrap = `<div class="unote-wrap" id="utwrap:${key}:${i}" style="display:${uNote ? 'block' : 'none'}">
+  const mkCard=({item,i})=>{
+    const isArrived=!!arrivedSet[`${key}:${i}`];
+    const num=String(i+1).padStart(2,'0');
+    const mapBtn=item.lat?`<a class="spot-map" href="https://maps.google.com/maps?q=${item.lat},${item.lng}" target="_blank">Maps</a>`:'';
+    const busBtn=item.busUrl?`<a class="spot-map" href="${item.busUrl}" target="_blank" style="margin-left:6px">Bus 時刻表</a>`:'';
+    const arrivedBtn=`<span class="spot-arrived-btn" onclick="toggleArrived('${key}',${i})">${isArrived?'↩ 取消':'✓ 已抵達'}</span>`;
+    const uNote=getUnote(key,i);
+    const noteToggle=`<span class="unote-toggle${uNote?' filled':''}" id="utbtn:${key}:${i}" onclick="toggleUnote('${key}',${i})">${uNote?'備注 ✎':'+ 備注'}</span>`;
+    const noteWrap=`<div class="unote-wrap" id="utwrap:${key}:${i}" style="display:${uNote?'block':'none'}">
       <textarea class="unote-textarea" placeholder="隨手記一下，自動儲存…" oninput="onUnoteInput('${key}',${i},this)">${uNote.replace(/</g,'&lt;')}</textarea>
       <div class="unote-saved" id="utsvd:${key}:${i}">已儲存</div>
     </div>`;
-    const note = item.note ? `<div class="spot-note">${item.note.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div>` : '';
-    return `<div class="spot-card${isArrived ? ' arrived' : ''}">
+    const note=item.note?`<div class="spot-note">${item.note.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div>`:'';
+    return`<div class="spot-card${isArrived?' arrived':''}">
       <div class="spot-num">${num}</div>
       <div class="spot-name">${item.name}</div>
       ${note}
@@ -736,33 +711,29 @@ function renderDay(key){
       ${noteWrap}
     </div>`;
   };
-
-  pending.forEach(e => { html += mkCard(e); });
+  pending.forEach(e=>{html+=mkCard(e);});
   if(done.length){
-    html += `<div style="font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin:14px 0 8px;padding-left:2px">已抵達</div>`;
-    done.forEach(e => { html += mkCard(e); });
+    html+=`<div style="font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin:14px 0 8px;padding-left:2px">已抵達</div>`;
+    done.forEach(e=>{html+=mkCard(e);});
   }
-  body.innerHTML = html;
-  body.scrollTop = 0;
+  body.innerHTML=html; body.scrollTop=0;
 }
-
 
 // ── WEATHER ──────────────────────────────────────────
 const WD={0:'晴天',1:'晴朗',2:'多雲',3:'陰天',45:'有霧',48:'凍霧',51:'毛毛雨',53:'毛毛雨',55:'毛毛雨',61:'小雨',63:'中雨',65:'大雨',71:'小雪',73:'中雪',75:'大雪',80:'陣雨',81:'陣雨',82:'大陣雨',95:'雷雨',96:'雷雨',99:'強雷雨'};
 const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
-const DZ=['日','一','二','三','四','五','六'];
+/* 天氣用拜幾，日=週日 */
+const DZ=['日','拜一','拜二','拜三','拜四','拜五','拜六'];
 let wxBusy=false;
 
 function setWxGeo(el){
   document.querySelectorAll('.wlt').forEach(e=>e.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('wxBox').innerHTML='<div class="wx-loading">取得位置中…</div>';
-  if(!navigator.geolocation){
-    document.getElementById('wxBox').innerHTML='<div class="wx-loading">此裝置不支援定位</div>';return;
-  }
+  if(!navigator.geolocation){document.getElementById('wxBox').innerHTML='<div class="wx-loading">此裝置不支援定位</div>';return;}
   navigator.geolocation.getCurrentPosition(
     pos=>fetchWx(pos.coords.latitude,pos.coords.longitude,'現在位置'),
-    ()=>{ document.getElementById('wxBox').innerHTML='<div class="wx-loading">無法取得位置，請允許定位權限</div>'; }
+    ()=>{document.getElementById('wxBox').innerHTML='<div class="wx-loading">無法取得位置，請允許定位權限</div>';}
   );
 }
 function setWxFixed(el){
@@ -773,11 +744,8 @@ function setWxFixed(el){
 function loadWx(){
   const activeTab=document.querySelector('.wlt.active');
   if(!activeTab) return;
-  if(activeTab.dataset.lat){
-    fetchWx(parseFloat(activeTab.dataset.lat),parseFloat(activeTab.dataset.lng),activeTab.dataset.name);
-  } else {
-    setWxGeo(activeTab);
-  }
+  if(activeTab.dataset.lat) fetchWx(parseFloat(activeTab.dataset.lat),parseFloat(activeTab.dataset.lng),activeTab.dataset.name);
+  else setWxGeo(activeTab);
 }
 async function fetchWx(lat,lng,name){
   if(wxBusy)return; wxBusy=true;
@@ -788,9 +756,16 @@ async function fetchWx(lat,lng,name){
     const cur=d.current,day=d.daily,code=cur.weathercode;
     const fc=[0,1,2,3,4,5,6].map(i=>{
       const dt=new Date(day.time[i]);
-      const lbl=i===0?'今天':i===1?'明天':DZ[dt.getDay()];
+      const dayOfWeek=dt.getDay();
+      /* 今天/明天直接顯示，其餘顯示拜幾＋日期 */
+      const lbl=i===0?'今天':i===1?'明天':DZ[dayOfWeek];
       const ds=`${dt.getMonth()+1}/${dt.getDate()}`;
-      return`<div class="wx-col"><div class="wc-name">${lbl}<span style="font-size:9px;color:var(--ink4);margin-left:3px">${ds}</span></div><div class="wc-emoji">${WI[day.weathercode[i]]||'—'}</div><div class="wc-desc">${WD[day.weathercode[i]]||''}</div><div class="wc-temps"><span class="wc-hi">${Math.round(day.temperature_2m_max[i])}°</span><span class="wc-lo">${Math.round(day.temperature_2m_min[i])}°</span></div></div>`;
+      return`<div class="wx-col">
+        <div class="wc-name">${lbl}<span class="wc-date">${ds}</span></div>
+        <div class="wc-emoji">${WI[day.weathercode[i]]||'—'}</div>
+        <div class="wc-desc">${WD[day.weathercode[i]]||''}</div>
+        <div class="wc-temps"><span class="wc-hi">${Math.round(day.temperature_2m_max[i])}°</span><span class="wc-lo">${Math.round(day.temperature_2m_min[i])}°</span></div>
+      </div>`;
     }).join('');
     document.getElementById('wxBox').innerHTML=`<div class="wx-now">
       <div class="wx-top">
@@ -812,12 +787,8 @@ async function fetchWx(lat,lng,name){
 }
 
 // ── COST ─────────────────────────────────────────────
-
-
 let costRecords=JSON.parse(localStorage.getItem('osaka_costs')||'[]');
-
 function saveCostLocal(){localStorage.setItem('osaka_costs',JSON.stringify(costRecords));}
-
 function loadCostTotals(){
   let tw=0,jp=0,cashJP=0,cardJP=0;
   costRecords.filter(r=>!r.hidden).forEach(r=>{
@@ -829,7 +800,6 @@ function loadCostTotals(){
   document.getElementById('totalJPY').textContent=`¥ ${jp.toLocaleString()}`;
   document.getElementById('totalCashJPY').textContent=`¥ ${cashJP.toLocaleString()}`;
   document.getElementById('totalCardJPY').textContent=`¥ ${cardJP.toLocaleString()}`;
-  // 還原儲存的現金預算
   const saved=localStorage.getItem('osaka_cash_budget');
   const budgetEl=document.getElementById('cashBudgetJPY');
   if(saved&&budgetEl&&!budgetEl.value) budgetEl.value=saved;
@@ -839,11 +809,10 @@ function loadCostTotals(){
 let cashSaveTimer=null;
 function onCashBudgetInput(){
   updateCashDisplay();
-  // 停止輸入 800ms 後自動儲存
   clearTimeout(cashSaveTimer);
   cashSaveTimer=setTimeout(()=>{
     const val=document.getElementById('cashBudgetJPY').value;
-    localStorage.setItem('osaka_cash_budget', val);
+    localStorage.setItem('osaka_cash_budget',val);
     const hint=document.getElementById('cashSaveHint');
     if(hint){hint.textContent='已儲存';setTimeout(()=>{hint.textContent='';},1500);}
   },800);
@@ -851,9 +820,7 @@ function onCashBudgetInput(){
 function updateCashDisplay(cashUsed){
   const budgetEl=document.getElementById('cashBudgetJPY');
   const budget=parseFloat(budgetEl?.value)||0;
-  const used=cashUsed!=null?cashUsed:(() => {
-    let c=0; costRecords.filter(r=>!r.hidden&&(r.pay||'Cash')==='Cash').forEach(r=>c+=(r.jpy||0)); return c;
-  })();
+  const used=cashUsed!=null?cashUsed:(()=>{let c=0;costRecords.filter(r=>!r.hidden&&(r.pay||'Cash')==='Cash').forEach(r=>c+=(r.jpy||0));return c;})();
   const remainEl=document.getElementById('cashRemain');
   if(!remainEl)return;
   if(!budget){remainEl.textContent='—';remainEl.style.color='var(--ink)';return;}
@@ -861,16 +828,12 @@ function updateCashDisplay(cashUsed){
   remainEl.textContent=`¥ ${rem.toLocaleString()}`;
   remainEl.style.color=rem<0?'#c07070':rem<5000?'#c0a070':'var(--ink)';
 }
-
 function renderCostRecords(){
   const el=document.getElementById('costRecordsList');
   if(!el)return;
   if(!costRecords.length){el.innerHTML='<div class="cr-empty">尚無紀錄</div>';return;}
-  // 按天分組
   const groups={};
-  costRecords.forEach((r,i)=>{
-    if(!groups[r.day])groups[r.day]=[]; groups[r.day].push({...r,_idx:i});
-  });
+  costRecords.forEach((r,i)=>{if(!groups[r.day])groups[r.day]=[];groups[r.day].push({...r,_idx:i});});
   const dayOrder=['第01天','第02天','第03天','第04天','第05天','第06天'];
   let html='';
   for(const dk of dayOrder){
@@ -907,48 +870,28 @@ function renderCostRecords(){
   el.innerHTML=html;
 }
 function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
-function toggleEditRecord(idx){
-  const f=document.getElementById(`cef-${idx}`);
-  if(f)f.style.display=f.style.display==='none'?'block':'none';
-}
+function toggleEditRecord(idx){const f=document.getElementById(`cef-${idx}`);if(f)f.style.display=f.style.display==='none'?'block':'none';}
 function saveEditRecord(idx){
-  const r=costRecords[idx]; if(!r)return;
+  const r=costRecords[idx];if(!r)return;
   r.name=document.getElementById(`cef-name-${idx}`).value.trim()||r.name;
   r.note=document.getElementById(`cef-note-${idx}`).value.trim();
   r.jpy=parseFloat(document.getElementById(`cef-jpy-${idx}`).value)||0;
   r.twd=parseFloat(document.getElementById(`cef-twd-${idx}`).value)||0;
-  saveCostLocal(); loadCostTotals();
+  saveCostLocal();loadCostTotals();
 }
-function toggleHideRecord(idx){
-  const r=costRecords[idx]; if(!r)return;
-  r.hidden=!r.hidden; saveCostLocal(); loadCostTotals();
-}
+function toggleHideRecord(idx){const r=costRecords[idx];if(!r)return;r.hidden=!r.hidden;saveCostLocal();loadCostTotals();}
 function deleteRecord(idx){
-  // confirm() is blocked on GitHub Pages — use inline two-step
-  const btn=document.querySelector(`#cr-${idx} .cr-btn.del`);
-  if(!btn)return;
-  if(btn.dataset.confirm==='1'){
-    costRecords.splice(idx,1); saveCostLocal(); loadCostTotals();
-  } else {
-    btn.dataset.confirm='1';
-    btn.textContent='確定？';
-    btn.style.background='rgba(192,112,112,0.22)';
-    setTimeout(()=>{
-      if(btn.dataset.confirm==='1'){
-        btn.dataset.confirm='';btn.textContent='刪除';btn.style.background='';
-      }
-    },2500);
-  }
+  const btn=document.querySelector(`#cr-${idx} .cr-btn.del`);if(!btn)return;
+  if(btn.dataset.confirm==='1'){costRecords.splice(idx,1);saveCostLocal();loadCostTotals();}
+  else{btn.dataset.confirm='1';btn.textContent='確定？';btn.style.background='rgba(192,112,112,0.22)';
+    setTimeout(()=>{if(btn.dataset.confirm==='1'){btn.dataset.confirm='';btn.textContent='刪除';btn.style.background='';}},2500);}
 }
-
 function showJpyHint(){
   const j=parseFloat(document.getElementById('cf-jpy').value)||0;
   const r=parseFloat(document.getElementById('cf-rate').value)||0.21;
   const hint=document.getElementById('jpy-hint');
-  if(!hint)return;
-  hint.textContent=j>0?`約 NT$ ${Math.round(j*r).toLocaleString()}`:'';
+  if(hint)hint.textContent=j>0?`約 NT$ ${Math.round(j*r).toLocaleString()}`:'';
 }
-
 async function saveCost(){
   const name=document.getElementById('cf-name').value.trim();
   if(!name){showMsg('請填寫名稱',true);return;}
@@ -961,54 +904,32 @@ async function saveCost(){
   const dateMap={'第01天':'2026-04-11','第02天':'2026-04-12','第03天':'2026-04-13','第04天':'2026-04-14','第05天':'2026-04-15','第06天':'2026-04-16'};
   const btn=document.getElementById('saveBtn');
   btn.disabled=true;btn.innerHTML='<span class="spin"></span> 儲存中…';showMsg('');
-
-  // 本地記錄
   costRecords.push({name,jpy:jpy||0,twd:twd||0,day,pay,note,ts:Date.now()});
-  saveCostLocal(); loadCostTotals();
-
-  // Notion via Worker proxy（token 存在 Worker 環境變數，不外露）
-  const payload={
-    parent:{database_id:NOTION_DB_ID},
-    properties:{
-      'Name':{title:[{text:{content:name}}]},
-      '旅途的第幾天':{select:{name:day}},
-      '本趟匯率':{number:rate},
-      '備註':{rich_text:[{text:{content:note||''}}]},
-      '國家城市':{select:{name:'日本'}},
-      '封存此趟行程':{checkbox:false},
-      '日期':{date:{start:dateMap[day]}},
-      '付款方式':{select:{name:pay}},
-    }
-  };
+  saveCostLocal();loadCostTotals();
+  const payload={parent:{database_id:NOTION_DB_ID},properties:{
+    'Name':{title:[{text:{content:name}}]},
+    '旅途的第幾天':{select:{name:day}},
+    '本趟匯率':{number:rate},
+    '備註':{rich_text:[{text:{content:note||''}}]},
+    '國家城市':{select:{name:'日本'}},
+    '封存此趟行程':{checkbox:false},
+    '日期':{date:{start:dateMap[day]}},
+    '付款方式':{select:{name:pay}},
+  }};
   if(jpy!==null) payload.properties['開銷紀錄 (外幣)']={number:jpy};
   if(twd!==null) payload.properties['開銷紀錄（台幣）']={number:twd};
   try{
     let res;
-    // 先試 Worker proxy
     try{
-      res=await fetch(NOTION_WORKER_URL,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({action:'create',payload})
-      });
+      res=await fetch(NOTION_WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'create',payload})});
       if(!res.ok) throw new Error('worker:'+res.status);
     }catch(workerErr){
-      // Worker 失敗 → 若有填 NOTION_DIRECT_TOKEN 就直接打 Notion API
       if(!NOTION_DIRECT_TOKEN) throw workerErr;
-      res=await fetch('https://api.notion.com/v1/pages',{
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'Authorization':'Bearer '+NOTION_DIRECT_TOKEN,
-          'Notion-Version':'2022-06-28',
-        },
-        body:JSON.stringify(payload)
-      });
+      res=await fetch('https://api.notion.com/v1/pages',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+NOTION_DIRECT_TOKEN,'Notion-Version':'2022-06-28'},body:JSON.stringify(payload)});
       if(!res.ok) throw new Error('direct:'+res.status);
     }
     showMsg('✓ 已儲存到 Notion！');
   }catch(e){showMsg('本地已記錄，Notion 同步失敗',true);console.error(e);}
-
   btn.disabled=false;btn.textContent='Save to Notion';
   ['cf-name','cf-jpy','cf-twd','cf-note'].forEach(id=>document.getElementById(id).value='');
 }
@@ -1033,9 +954,7 @@ if('serviceWorker' in navigator){
   });
   navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload());
 }
-function applyUpdate(){
-  if(swWaiting){ swWaiting.postMessage({type:'SKIP_WAITING'}); }
-}
+function applyUpdate(){if(swWaiting){swWaiting.postMessage({type:'SKIP_WAITING'});}}
 </script>
 </body>
 </html>
