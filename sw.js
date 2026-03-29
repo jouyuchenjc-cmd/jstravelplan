@@ -1,6 +1,6 @@
 // sw.js — Osaka Trip PWA Service Worker
 // 每次改版只需要更新這個版本號，瀏覽器就會自動偵測新版
-const CACHE_NAME = 'osaka-trip-v4';
+const CACHE_NAME = 'osaka-trip-v5';
 const ASSETS = [
   './',
   './index.html',
@@ -13,8 +13,6 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
   );
-  // 不等舊的 SW 關閉，直接進入等待
-  // （由 index.html 的 skipWaiting 訊息觸發）
 });
 
 // ── Activate：清除舊版快取 ──
@@ -28,11 +26,11 @@ self.addEventListener('activate', event => {
   );
 });
 
-// ── Fetch：Cache First，字型 / 天氣 API 走網路 ──
+// ── Fetch：Cache First，外部 API 走網路 ──
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // 天氣 API、Google Fonts、Worker — 永遠走網路
+  // 天氣 API、Notion Worker、Google Fonts — 永遠走網路
   if (
     url.hostname === 'api.open-meteo.com' ||
     url.hostname === 'fonts.googleapis.com' ||
@@ -48,7 +46,6 @@ self.addEventListener('fetch', event => {
     caches.match(event.request).then(cached => {
       if (cached) return cached;
       return fetch(event.request).then(response => {
-        // 只快取成功的同源請求
         if (response.ok && url.origin === self.location.origin) {
           const clone = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
