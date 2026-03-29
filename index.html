@@ -115,7 +115,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .wx-big-temp{font-size:50px;font-weight:300;line-height:1;color:var(--ink)}
 .wx-desc-txt{font-size:14px;color:var(--ink);margin-top:3px;opacity:.72}
 .wx-right-info{text-align:center}
-.wx-big-svg{width:52px;height:52px;display:block;margin:0 auto}
+.wx-big-svg{width:52px;height:52px;display:block;margin:10px auto 0}
 .wx-hilo{font-size:13px;color:var(--ink3);margin-top:6px}
 .wx-row{display:flex;flex-direction:column;gap:0;margin-top:14px;padding-top:14px;border-top:1px solid rgba(77,88,111,0.1)}
 .wx-col{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px solid rgba(77,88,111,0.07)}
@@ -150,6 +150,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 .cost-records{margin-top:12px}
+.cr-day-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:10px;margin-bottom:2px}
+.cr-day-tabs::-webkit-scrollbar{display:none}
+.cr-dt{flex-shrink:0;background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-sm);padding:6px 12px;font-size:11px;font-weight:700;color:var(--ink3);cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all .18s;white-space:nowrap}
+.cr-dt.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 3px 10px var(--accent-glow)}
+.cr-dt:active{transform:scale(.94)}
 .cr-section-lbl{font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin:14px 0 8px}
 .cr-item{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-sm);padding:11px 13px;margin-bottom:8px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 6px rgba(43,36,32,0.05);transition:opacity .2s}
 .cr-item.hidden-record{opacity:.38}
@@ -464,6 +469,15 @@ function renderDay(key){
     done.forEach(e=>{html+=mkCard(e);});
   }
   body.innerHTML=html;body.scrollTop=0;
+  // Resize all open textareas after render
+  requestAnimationFrame(()=>{
+    body.querySelectorAll('.unote-textarea').forEach(ta=>{
+      if(ta.closest('.unote-wrap').style.display!=='none'){
+        ta.style.height='auto';
+        ta.style.height=ta.scrollHeight+'px';
+      }
+    });
+  });
 }
 
 // WEATHER — SVG icons, 16px
@@ -593,15 +607,31 @@ function updateCashDisplay(cashUsed){
   remainEl.textContent=`¥ ${rem.toLocaleString()}`;
   remainEl.style.color=rem<0?'#c07070':rem<5000?'#c0a070':'var(--ink)';
 }
+let activeCrDay='全部';
 function renderCostRecords(){
   const el=document.getElementById('costRecordsList');if(!el)return;
-  if(!costRecords.length){el.innerHTML='<div class="cr-empty">尚無紀錄</div>';return;}
+  // Build tabs
   const groups={};
   costRecords.forEach((r,i)=>{if(!groups[r.day])groups[r.day]=[];groups[r.day].push({...r,_idx:i});});
+  const hasRecords=costRecords.length>0;
+  // Tab bar
+  const tabDays=['全部',...DAY_ORDER.filter(d=>groups[d])];
+  const dateShort={'第01天':'04/11','第02天':'04/12','第03天':'04/13','第04天':'04/14','第05天':'04/15','第06天':'04/16'};
+  let tabHtml='<div class="cr-day-tabs">';
+  tabDays.forEach(d=>{
+    const lbl=d==='全部'?'全部':dateShort[d]||d;
+    tabHtml+=`<div class="cr-dt${d===activeCrDay?' active':''}" onclick="setCrDay('${d}')">${lbl}</div>`;
+  });
+  tabHtml+='</div>';
+
+  if(!hasRecords){el.innerHTML=tabHtml+'<div class="cr-empty">尚無紀錄</div>';return;}
+
+  // Records
   let html='';
-  for(const dk of DAY_ORDER){
+  const showDays=activeCrDay==='全部'?DAY_ORDER.filter(d=>groups[d]):[activeCrDay];
+  for(const dk of showDays){
     if(!groups[dk])continue;
-    html+=`<div class="cr-section-lbl">${dk}</div>`;
+    if(activeCrDay==='全部') html+=`<div class="cr-section-lbl">${dk}</div>`;
     groups[dk].forEach(r=>{
       const hidden=r.hidden?'hidden-record':'';const eyeBtn=r.hidden?'顯示':'隱藏';
       html+=`<div class="cr-item ${hidden}" id="cr-${r._idx}">
@@ -626,8 +656,10 @@ function renderCostRecords(){
       </div>`;
     });
   }
-  el.innerHTML=html;
+  if(!html) html='<div class="cr-empty">這天還沒有紀錄</div>';
+  el.innerHTML=tabHtml+html;
 }
+function setCrDay(day){activeCrDay=day;renderCostRecords();}
 function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
 function toggleEditRecord(idx){const f=document.getElementById(`cef-${idx}`);if(f)f.style.display=f.style.display==='none'?'block':'none';}
 function saveEditRecord(idx){
