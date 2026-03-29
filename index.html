@@ -26,85 +26,32 @@
   --r: 20px; --r-sm: 13px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-/* ── 藍色底部 bug 根治：html/body/app 全部鎖定背景色，screen 不加 padding-bottom ── */
 html,body{height:100%;overflow:hidden;background:#f3eee8}
-body{
-  font-family:'Zen Maru Gothic','Noto Sans TC',sans-serif;
-  background:var(--bg);color:var(--ink);
-  -webkit-font-smoothing:antialiased;
-}
-body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(ellipse 60% 40% at 80% 10%,rgba(207,168,163,0.15) 0%,transparent 70%),
-    radial-gradient(ellipse 50% 60% at 10% 80%,rgba(77,88,111,0.07) 0%,transparent 70%);
-}
+body{font-family:'Zen Maru Gothic','Noto Sans TC',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 60% 40% at 80% 10%,rgba(207,168,163,0.15) 0%,transparent 70%),radial-gradient(ellipse 50% 60% at 10% 80%,rgba(77,88,111,0.07) 0%,transparent 70%)}
 #app{position:relative;z-index:1;height:100dvh;overflow:hidden;background:var(--bg)}
-.screen{
-  position:absolute;inset:0;display:flex;flex-direction:column;
-  /* 不在 screen 上加 padding-bottom，各頁面自行處理 safe area */
-  opacity:0;pointer-events:none;transform:translateY(18px);
-  transition:opacity .25s ease,transform .25s ease;overflow:hidden;
-  background:var(--bg);
-}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transform:translateY(18px);transition:opacity .25s ease,transform .25s ease;overflow:hidden;background:var(--bg)}
 .screen.active{opacity:1;pointer-events:all;transform:translateY(0)}
-
-/* ══ HOME ══ */
-#home{justify-content:center;align-items:center;padding:24px 24px;gap:0;
-  padding-bottom:calc(24px + env(safe-area-inset-bottom))}
-.home-ill{
-  width:186px;height:186px;flex-shrink:0;
-  margin-top:calc(env(safe-area-inset-top) + 4px);
-}
+#home{justify-content:center;align-items:center;padding:24px 24px;gap:0;padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+.home-ill{width:186px;height:186px;flex-shrink:0;margin-top:calc(env(safe-area-inset-top) + 4px)}
 .home-ill img{width:100%;height:100%;object-fit:contain}
 .home-meta{text-align:center;margin-top:8px}
 .home-dates{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--ink2);text-transform:uppercase}
 .home-sub{font-size:10px;color:var(--ink3);margin-top:2px;letter-spacing:2px}
-.home-title{
-  font-size:42px;font-weight:700;letter-spacing:5px;line-height:1;margin-top:6px;
-  background:linear-gradient(135deg,#e5e0de 0%,#a27577 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
+.home-title{font-size:42px;font-weight:700;letter-spacing:5px;line-height:1;margin-top:6px;background:linear-gradient(135deg,#e5e0de 0%,#a27577 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .nav-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:18px}
-.nav-btn{
-  background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);
-  padding:16px 15px;cursor:pointer;
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  transition:all .18s;display:flex;flex-direction:column;gap:5px;
-  box-shadow:0 2px 12px rgba(43,36,32,0.06);
-}
+.nav-btn{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:16px 15px;cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:all .18s;display:flex;flex-direction:column;gap:5px;box-shadow:0 2px 12px rgba(43,36,32,0.06)}
 .nav-btn:active{transform:scale(.96);background:rgba(255,255,255,0.82)}
 .nb-icon{font-size:9px;letter-spacing:2px;color:var(--ink2);font-weight:700;opacity:.55}
 .nb-label{font-size:16px;font-weight:700;color:var(--ink)}
 .nb-sub{font-size:10px;color:var(--ink3)}
-
-/* ══ SHARED HEADER ══ */
-.s-header{
-  flex-shrink:0;
-  padding:calc(env(safe-area-inset-top) + 14px) 18px 12px;
-  display:flex;align-items:center;gap:12px;
-  background:rgba(243,238,232,0.88);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-}
-.back-btn{
-  width:34px;height:34px;border-radius:50%;
-  background:var(--card);border:1px solid var(--card-border);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;flex-shrink:0;font-size:15px;color:var(--ink2);
-  box-shadow:0 2px 8px rgba(43,36,32,0.06);transition:transform .15s;
-}
+.s-header{flex-shrink:0;padding:calc(env(safe-area-inset-top) + 14px) 18px 12px;display:flex;align-items:center;gap:12px;background:rgba(243,238,232,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.back-btn{width:34px;height:34px;border-radius:50%;background:var(--card);border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:15px;color:var(--ink2);box-shadow:0 2px 8px rgba(43,36,32,0.06);transition:transform .15s}
 .back-btn:active{transform:scale(.9)}
 .s-title{font-size:17px;font-weight:700;color:var(--ink)}
-/* safe area 改在 s-body 底部 padding 處理 */
 .s-body{flex:1;overflow-y:auto;padding:12px 16px calc(28px + env(safe-area-inset-bottom))}
 .s-body::-webkit-scrollbar{display:none}
-
-/* ══ FLIGHT ══ */
-.flight-card{
-  background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);
-  padding:18px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  margin-bottom:12px;box-shadow:0 2px 12px rgba(43,36,32,0.06);
-}
+.flight-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:18px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);margin-bottom:12px;box-shadow:0 2px 12px rgba(43,36,32,0.06)}
 .fc-tag{font-size:9px;letter-spacing:2px;font-weight:700;color:var(--ink2);text-transform:uppercase;margin-bottom:14px;opacity:.6}
 .fc-route{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .fc-airport{text-align:center}
@@ -114,7 +61,6 @@ body::before{
 .fc-mid{flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
 .fc-line{display:flex;align-items:center;gap:6px;width:100%}
 .fc-dash{flex:1;height:1px;background:rgba(77,88,111,0.18)}
-/* CSS rotate 最穩，不依賴 SVG transform */
 .fc-plane{width:28px;height:28px;flex-shrink:0;color:var(--accent2);transform:rotate(90deg)}
 .fc-fno{font-size:12px;font-weight:700;color:var(--accent2)}
 .fc-times{display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid rgba(77,88,111,0.1)}
@@ -122,17 +68,9 @@ body::before{
 .fc-t-lbl{font-size:9px;color:var(--ink4);letter-spacing:1px;margin-bottom:3px;text-transform:uppercase}
 .fc-t-val{font-size:15px;font-weight:700;color:var(--ink)}
 .fc-t-date{font-size:10px;color:var(--ink3)}
-
-/* ══ DAY ══ */
 .day-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;padding:0 16px 10px;background:rgba(243,238,232,0.7)}
 .day-tabs::-webkit-scrollbar{display:none}
-.dt{
-  flex-shrink:0;min-width:58px;
-  background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-sm);
-  padding:8px 10px;text-align:center;cursor:pointer;
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  transition:all .18s;box-shadow:0 1px 6px rgba(43,36,32,0.05);
-}
+.dt{flex-shrink:0;min-width:58px;background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-sm);padding:8px 10px;text-align:center;cursor:pointer;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:all .18s;box-shadow:0 1px 6px rgba(43,36,32,0.05)}
 .dt:active{transform:scale(.94)}
 .dt.active{background:var(--accent);border-color:var(--accent);box-shadow:0 4px 14px var(--accent-glow)}
 .dt-lbl{font-size:8px;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase}
@@ -141,276 +79,132 @@ body::before{
 .dt.active .dt-num{color:#fff}
 .dt-date{font-size:8px;color:var(--ink4);margin-top:1px}
 .dt.active .dt-date{color:rgba(255,255,255,.68)}
-.ov-card{
-  background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);
-  padding:13px 15px;margin-bottom:10px;
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 2px 10px rgba(43,36,32,0.05);
-}
+.ov-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:13px 15px;margin-bottom:10px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 2px 10px rgba(43,36,32,0.05)}
 .ov-lbl{font-size:9px;letter-spacing:2px;color:var(--ink2);font-weight:700;text-transform:uppercase;margin-bottom:5px;opacity:.58}
 .ov-text{font-size:12px;color:var(--ink);line-height:1.7}
-.spot-card{
-  background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);
-  padding:13px 14px;margin-bottom:9px;
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 2px 10px rgba(43,36,32,0.05);
-}
+.spot-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:13px 14px;margin-bottom:9px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 2px 10px rgba(43,36,32,0.05)}
 .spot-num{font-size:10px;font-weight:700;color:#a0a0a0;letter-spacing:1px;margin-bottom:3px}
 .spot-name{font-size:15px;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:7px}
 .spot-note{font-size:11px;color:var(--ink);line-height:1.7;white-space:pre-wrap;opacity:.72}
-.spot-map{
-  display:inline-flex;align-items:center;gap:5px;margin-top:9px;
-  background:rgba(77,88,111,0.07);border:1px solid rgba(77,88,111,0.14);
-  border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;
-  color:var(--ink2);text-decoration:none;cursor:pointer;transition:all .18s;
-}
+.spot-map{display:inline-flex;align-items:center;gap:5px;margin-top:9px;background:rgba(77,88,111,0.07);border:1px solid rgba(77,88,111,0.14);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--ink2);text-decoration:none;cursor:pointer;transition:all .18s}
 .spot-map:active{transform:scale(.95)}
-
-/* 已抵達 */
-.spot-arrived-btn{
-  display:inline-flex;align-items:center;margin-top:9px;margin-left:6px;
-  background:rgba(106,163,126,0.1);border:1px solid rgba(106,163,126,0.25);
-  border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;
-  color:#5a9a6e;cursor:pointer;transition:all .18s;
-}
+.spot-arrived-btn{display:inline-flex;align-items:center;margin-top:9px;margin-left:6px;background:rgba(106,163,126,0.1);border:1px solid rgba(106,163,126,0.25);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:#5a9a6e;cursor:pointer;transition:all .18s}
 .spot-arrived-btn:active{transform:scale(.95)}
 .spot-card.arrived{opacity:0.42;border-color:rgba(106,163,126,0.28)}
 .spot-card.arrived .spot-name{text-decoration:line-through;text-decoration-color:rgba(89,89,89,0.35)}
-
-/* 隨手備注 */
-.unote-toggle{
-  display:inline-flex;align-items:center;margin-top:9px;margin-left:6px;
-  background:rgba(77,88,111,0.07);border:1px solid rgba(77,88,111,0.12);
-  border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;
-  color:var(--ink4);cursor:pointer;transition:all .18s;
-}
+.unote-toggle{display:inline-flex;align-items:center;margin-top:9px;margin-left:6px;background:rgba(77,88,111,0.07);border:1px solid rgba(77,88,111,0.12);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--ink4);cursor:pointer;transition:all .18s}
 .unote-toggle.filled{color:var(--ink2);background:rgba(77,88,111,0.11);border-color:rgba(77,88,111,0.2)}
 .unote-toggle:active{transform:scale(.95)}
-.unote-wrap{
-  margin-top:8px;padding-top:8px;
-  border-top:1px solid rgba(77,88,111,0.08);
-  position:relative;
-}
-.unote-textarea{
-  width:100%;background:rgba(243,238,232,0.65);
-  border:1px solid rgba(77,88,111,0.14);border-radius:10px;
-  padding:9px 12px;font-size:12px;color:var(--ink);
-  font-family:'Zen Maru Gothic',sans-serif;
-  resize:none;outline:none;line-height:1.6;min-height:64px;
-  transition:border-color .2s;display:block;width:100%;
-}
+.unote-wrap{margin-top:8px;padding-top:8px;border-top:1px solid rgba(77,88,111,0.08)}
+/* ── textarea auto-height: overflow hidden, no resize ── */
+.unote-textarea{width:100%;background:rgba(243,238,232,0.65);border:1px solid rgba(77,88,111,0.14);border-radius:10px;padding:9px 12px;font-size:12px;color:var(--ink);font-family:'Zen Maru Gothic',sans-serif;resize:none;outline:none;line-height:1.6;overflow:hidden;min-height:40px;transition:border-color .2s;display:block}
 .unote-textarea:focus{border-color:var(--accent)}
 .unote-textarea::placeholder{color:var(--ink4)}
-.unote-saved{
-  font-size:10px;color:var(--accent2);margin-top:4px;
-  opacity:0;transition:opacity .3s;text-align:right;
-}
+.unote-saved{font-size:10px;color:var(--accent2);margin-top:4px;opacity:0;transition:opacity .3s;text-align:right}
 .unote-saved.show{opacity:1}
 
-/* ══ WEATHER ══ */
+/* ══ WEATHER — 全部 16px ══ */
 .wx-loc-tabs{display:flex;gap:8px;flex-shrink:0;padding:0 16px 10px;overflow-x:auto;scrollbar-width:none;background:rgba(243,238,232,0.7)}
 .wx-loc-tabs::-webkit-scrollbar{display:none}
-.wlt{
-  flex-shrink:0;background:var(--card);border:1px solid var(--card-border);
-  border-radius:20px;padding:7px 16px;font-size:12px;font-weight:700;
-  cursor:pointer;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  transition:all .18s;color:var(--ink2);box-shadow:0 1px 6px rgba(43,36,32,0.05);
-}
+.wlt{flex-shrink:0;background:var(--card);border:1px solid var(--card-border);border-radius:20px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:all .18s;color:var(--ink2);box-shadow:0 1px 6px rgba(43,36,32,0.05)}
 .wlt:active{transform:scale(.94)}
 .wlt.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 4px 12px var(--accent-glow)}
-.wx-now{
-  background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);
-  padding:20px 18px;margin-bottom:12px;
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 2px 12px rgba(43,36,32,0.06);
-}
+.wx-now{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:20px 18px;margin-bottom:12px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 2px 12px rgba(43,36,32,0.06)}
 .wx-top{display:flex;align-items:center;justify-content:space-between}
 .wx-loc-name{font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;margin-bottom:4px}
 .wx-big-temp{font-size:50px;font-weight:300;line-height:1;color:var(--ink)}
-.wx-desc-txt{font-size:13px;color:var(--ink);margin-top:3px;opacity:.72}
+.wx-desc-txt{font-size:14px;color:var(--ink);margin-top:3px;opacity:.72}
 .wx-right-info{text-align:center}
-.wx-icon-lbl{font-size:13px;font-weight:700;color:var(--ink2)}
-.wx-hilo{font-size:11px;color:var(--ink3);margin-top:4px}
-.wx-big-emoji{font-size:48px;line-height:1}
+.wx-big-svg{width:52px;height:52px;display:block;margin:0 auto}
+.wx-hilo{font-size:13px;color:var(--ink3);margin-top:6px}
 .wx-row{display:flex;flex-direction:column;gap:0;margin-top:14px;padding-top:14px;border-top:1px solid rgba(77,88,111,0.1)}
-.wx-col{display:flex;align-items:center;gap:10px;padding:7px 2px;border-bottom:1px solid rgba(77,88,111,0.07)}
+.wx-col{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px solid rgba(77,88,111,0.07)}
 .wx-col:last-child{border-bottom:none}
-.wc-name{font-size:12px;color:var(--ink3);min-width:46px}
-.wc-date{font-size:10px;color:var(--ink4);margin-left:2px}
-.wc-emoji{font-size:18px;min-width:28px;text-align:center}
-.wc-desc{font-size:11px;color:var(--ink2);flex:1;opacity:.75}
-.wc-temps{margin-left:auto;text-align:right}
-.wc-hi{font-size:14px;font-weight:700;color:var(--ink);display:inline}
-.wc-lo{font-size:11px;color:var(--ink3);display:inline;margin-left:4px}
+.wc-name{font-size:16px;color:var(--ink3);min-width:44px;white-space:nowrap}
+.wc-date{font-size:12px;color:var(--ink4);margin-left:4px}
+.wc-svg{width:26px;height:26px;flex-shrink:0}
+.wc-desc{font-size:15px;color:var(--ink2);flex:1;opacity:.78}
+.wc-temps{margin-left:auto;text-align:right;white-space:nowrap}
+.wc-hi{font-size:16px;font-weight:700;color:var(--ink);display:inline}
+.wc-lo{font-size:13px;color:var(--ink3);display:inline;margin-left:5px}
 .wx-loading{text-align:center;padding:40px;color:var(--ink3);font-size:13px}
 
-/* ══ COST ══ */
-.cost-total-card{
-  background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);
-  padding:16px 18px;margin-bottom:12px;
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 2px 12px rgba(43,36,32,0.06);
-  display:flex;align-items:center;justify-content:space-between;
-}
+.cost-total-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:16px 18px;margin-bottom:12px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 2px 12px rgba(43,36,32,0.06);display:flex;align-items:center;justify-content:space-between}
 .ct-label{font-size:9px;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin-bottom:4px}
 .ct-amount{font-size:26px;font-weight:700;color:var(--ink)}
 .ct-sub{font-size:10px;color:var(--ink3)}
 .ct-right{text-align:right}
 .ct-jpy{font-size:13px;color:var(--ink2);margin-top:4px}
-.cost-wrap{
-  background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);
-  padding:18px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 2px 12px rgba(43,36,32,0.06);
-}
+.cost-wrap{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:18px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 2px 12px rgba(43,36,32,0.06)}
 .cf-lbl{font-size:9px;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin-bottom:5px;display:block}
-.cf-in{
-  width:100%;background:rgba(243,238,232,0.7);border:1px solid rgba(77,88,111,0.15);
-  border-radius:10px;padding:11px 13px;color:var(--ink);font-size:14px;
-  font-family:'Zen Maru Gothic',sans-serif;outline:none;margin-bottom:13px;
-  transition:border-color .2s;-webkit-appearance:none;
-}
+.cf-in{width:100%;background:rgba(243,238,232,0.7);border:1px solid rgba(77,88,111,0.15);border-radius:10px;padding:11px 13px;color:var(--ink);font-size:14px;font-family:'Zen Maru Gothic',sans-serif;outline:none;margin-bottom:13px;transition:border-color .2s;-webkit-appearance:none}
 .cf-in:focus{border-color:var(--accent)}
 .cf-in::placeholder{color:var(--ink4)}
-.cf-sel{
-  width:100%;background:rgba(243,238,232,0.7);border:1px solid rgba(77,88,111,0.15);
-  border-radius:10px;padding:11px 13px;color:var(--ink);font-size:14px;
-  font-family:'Zen Maru Gothic',sans-serif;outline:none;margin-bottom:13px;
-  -webkit-appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M0 0l5 7 5-7z' fill='rgba(77,88,111,0.4)'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 13px center;cursor:pointer;
-}
+.cf-sel{width:100%;background:rgba(243,238,232,0.7);border:1px solid rgba(77,88,111,0.15);border-radius:10px;padding:11px 13px;color:var(--ink);font-size:14px;font-family:'Zen Maru Gothic',sans-serif;outline:none;margin-bottom:13px;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M0 0l5 7 5-7z' fill='rgba(77,88,111,0.4)'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;cursor:pointer}
 .cf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.save-btn{
-  width:100%;background:var(--accent);border:none;border-radius:12px;
-  padding:13px;color:#fff;font-size:15px;font-weight:700;
-  font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;
-  transition:all .18s;box-shadow:0 4px 16px var(--accent-glow);
-}
+.save-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:13px;color:#fff;font-size:15px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;transition:all .18s;box-shadow:0 4px 16px var(--accent-glow)}
 .save-btn:active{transform:scale(.98);opacity:.88}
 .save-btn:disabled{opacity:.45;cursor:not-allowed}
 .save-msg{text-align:center;font-size:12px;margin-top:10px;min-height:18px;color:#6aa37e}
 .save-msg.err{color:#c07070}
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* cost records */
 .cost-records{margin-top:12px}
 .cr-section-lbl{font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin:14px 0 8px}
-.cr-item{
-  background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-sm);
-  padding:11px 13px;margin-bottom:8px;
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 1px 6px rgba(43,36,32,0.05);transition:opacity .2s;
-}
+.cr-item{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-sm);padding:11px 13px;margin-bottom:8px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 6px rgba(43,36,32,0.05);transition:opacity .2s}
 .cr-item.hidden-record{opacity:.38}
 .cr-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .cr-name{font-size:14px;font-weight:700;color:var(--ink);flex:1}
 .cr-amount{font-size:13px;font-weight:700;color:var(--ink2)}
 .cr-meta{font-size:10px;color:var(--ink3);margin-top:3px}
 .cr-actions{display:flex;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(77,88,111,0.08)}
-.cr-btn{
-  background:rgba(77,88,111,0.07);border:1px solid rgba(77,88,111,0.12);
-  border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;
-  color:var(--ink2);cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;transition:all .15s;
-}
+.cr-btn{background:rgba(77,88,111,0.07);border:1px solid rgba(77,88,111,0.12);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--ink2);cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;transition:all .15s}
 .cr-btn:active{transform:scale(.94)}
 .cr-btn.del{color:#c07070;background:rgba(192,112,112,0.08);border-color:rgba(192,112,112,0.2)}
 .cr-edit-form{margin-top:8px;padding-top:8px;border-top:1px solid rgba(77,88,111,0.08)}
 .cr-edit-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}
-.cr-ef-in{
-  width:100%;background:rgba(243,238,232,0.7);border:1px solid rgba(77,88,111,0.15);
-  border-radius:8px;padding:7px 10px;color:var(--ink);font-size:13px;
-  font-family:'Zen Maru Gothic',sans-serif;outline:none;
-}
+.cr-ef-in{width:100%;background:rgba(243,238,232,0.7);border:1px solid rgba(77,88,111,0.15);border-radius:8px;padding:7px 10px;color:var(--ink);font-size:13px;font-family:'Zen Maru Gothic',sans-serif;outline:none}
 .cr-ef-in:focus{border-color:var(--accent)}
-.cr-save-btn{
-  width:100%;background:var(--accent);border:none;border-radius:8px;
-  padding:8px;color:#fff;font-size:13px;font-weight:700;
-  font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;margin-top:4px;
-}
+.cr-save-btn{width:100%;background:var(--accent);border:none;border-radius:8px;padding:8px;color:#fff;font-size:13px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;margin-top:4px}
 .cr-empty{text-align:center;padding:24px;color:var(--ink3);font-size:12px}
-
-/* update toast */
-.update-toast{
-  position:fixed;bottom:calc(env(safe-area-inset-bottom) + 16px);left:50%;
-  transform:translateX(-50%) translateY(80px);
-  background:var(--ink2);color:#fff;border-radius:20px;
-  padding:10px 20px;font-size:13px;font-weight:700;
-  white-space:nowrap;z-index:999;
-  transition:transform .3s ease;cursor:pointer;
-  box-shadow:0 4px 20px rgba(77,88,111,0.3);
-}
+.update-toast{position:fixed;bottom:calc(env(safe-area-inset-bottom) + 16px);left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink2);color:#fff;border-radius:20px;padding:10px 20px;font-size:13px;font-weight:700;white-space:nowrap;z-index:999;transition:transform .3s ease;cursor:pointer;box-shadow:0 4px 20px rgba(77,88,111,0.3)}
 .update-toast.show{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
-
 <div id="app">
 
-<!-- ══ HOME ══ -->
 <div id="home" class="screen active">
-  <div class="home-ill">
-    <img src="illustration.png" alt="Triple.Cell" draggable="false">
-  </div>
+  <div class="home-ill"><img src="illustration.png" alt="Triple.Cell" draggable="false"></div>
   <div class="home-meta">
     <div class="home-dates">04.11 (Sat) — 04.16 (Thu)</div>
     <div class="home-sub">OSAKA, JAPAN</div>
     <div class="home-title">OSAKA</div>
   </div>
   <div class="nav-grid">
-    <div class="nav-btn" onclick="go('flight')">
-      <div class="nb-icon">01</div>
-      <div class="nb-label">Flight Info</div>
-      <div class="nb-sub">CI 0152 / CI 0173</div>
-    </div>
-    <div class="nav-btn" onclick="go('day')">
-      <div class="nb-icon">02</div>
-      <div class="nb-label">Day</div>
-      <div class="nb-sub">行程 Day 01–06</div>
-    </div>
-    <div class="nav-btn" onclick="go('weather')">
-      <div class="nb-icon">03</div>
-      <div class="nb-label">Weather</div>
-      <div class="nb-sub">即時天氣預報</div>
-    </div>
-    <div class="nav-btn" onclick="go('cost')">
-      <div class="nb-icon">04</div>
-      <div class="nb-label">Cost</div>
-      <div class="nb-sub">記錄花費</div>
-    </div>
+    <div class="nav-btn" onclick="go('flight')"><div class="nb-icon">01</div><div class="nb-label">Flight Info</div><div class="nb-sub">CI 0152 / CI 0173</div></div>
+    <div class="nav-btn" onclick="go('day')"><div class="nb-icon">02</div><div class="nb-label">Day</div><div class="nb-sub">行程 Day 01–06</div></div>
+    <div class="nav-btn" onclick="go('weather')"><div class="nb-icon">03</div><div class="nb-label">Weather</div><div class="nb-sub">即時天氣預報</div></div>
+    <div class="nav-btn" onclick="go('cost')"><div class="nb-icon">04</div><div class="nb-label">Cost</div><div class="nb-sub">記錄花費</div></div>
   </div>
 </div>
 
-<!-- ══ FLIGHT ══ -->
 <div id="flight" class="screen">
-  <div class="s-header">
-    <div class="back-btn" onclick="go('home')">←</div>
-    <div class="s-title">Flight Info</div>
-  </div>
+  <div class="s-header"><div class="back-btn" onclick="go('home')">←</div><div class="s-title">Flight Info</div></div>
   <div class="s-body">
     <div class="flight-card">
       <div class="fc-tag">Outbound · 去程</div>
       <div class="fc-route">
-        <div class="fc-airport">
-          <div class="fc-iata">TPE</div>
-          <div class="fc-city">台北</div>
-          <div class="fc-terminal">T2</div>
-        </div>
+        <div class="fc-airport"><div class="fc-iata">TPE</div><div class="fc-city">台北</div><div class="fc-terminal">T2</div></div>
         <div class="fc-mid">
           <div class="fc-line">
             <div class="fc-dash"></div>
-            <svg class="fc-plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 16.5L13.5 11.5V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V11.5L2 16.5V18.5L10.5 16V20.5L8.5 22V23.5L12 22.5L15.5 23.5V22L13.5 20.5V16L22 18.5V16.5Z" fill="currentColor"/>
-            </svg>
+            <svg class="fc-plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.5L13.5 11.5V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V11.5L2 16.5V18.5L10.5 16V20.5L8.5 22V23.5L12 22.5L15.5 23.5V22L13.5 20.5V16L22 18.5V16.5Z" fill="currentColor"/></svg>
             <div class="fc-dash"></div>
           </div>
           <div class="fc-fno">CI 0152</div>
         </div>
-        <div class="fc-airport">
-          <div class="fc-iata">KIX</div>
-          <div class="fc-city">大阪</div>
-          <div class="fc-terminal">T1</div>
-        </div>
+        <div class="fc-airport"><div class="fc-iata">KIX</div><div class="fc-city">大阪</div><div class="fc-terminal">T1</div></div>
       </div>
       <div class="fc-times">
         <div class="fc-t"><div class="fc-t-lbl">Depart</div><div class="fc-t-val">09:00</div><div class="fc-t-date">2026.04.11</div></div>
@@ -421,26 +215,16 @@ body::before{
     <div class="flight-card">
       <div class="fc-tag">Return · 回程</div>
       <div class="fc-route">
-        <div class="fc-airport">
-          <div class="fc-iata">KIX</div>
-          <div class="fc-city">大阪</div>
-          <div class="fc-terminal">T1</div>
-        </div>
+        <div class="fc-airport"><div class="fc-iata">KIX</div><div class="fc-city">大阪</div><div class="fc-terminal">T1</div></div>
         <div class="fc-mid">
           <div class="fc-line">
             <div class="fc-dash"></div>
-            <svg class="fc-plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 16.5L13.5 11.5V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V11.5L2 16.5V18.5L10.5 16V20.5L8.5 22V23.5L12 22.5L15.5 23.5V22L13.5 20.5V16L22 18.5V16.5Z" fill="currentColor"/>
-            </svg>
+            <svg class="fc-plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.5L13.5 11.5V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V11.5L2 16.5V18.5L10.5 16V20.5L8.5 22V23.5L12 22.5L15.5 23.5V22L13.5 20.5V16L22 18.5V16.5Z" fill="currentColor"/></svg>
             <div class="fc-dash"></div>
           </div>
           <div class="fc-fno">CI 0173</div>
         </div>
-        <div class="fc-airport">
-          <div class="fc-iata">TPE</div>
-          <div class="fc-city">台北</div>
-          <div class="fc-terminal">T2</div>
-        </div>
+        <div class="fc-airport"><div class="fc-iata">TPE</div><div class="fc-city">台北</div><div class="fc-terminal">T2</div></div>
       </div>
       <div class="fc-times">
         <div class="fc-t"><div class="fc-t-lbl">Depart</div><div class="fc-t-val">19:05</div><div class="fc-t-date">2026.04.16</div></div>
@@ -451,22 +235,14 @@ body::before{
   </div>
 </div>
 
-<!-- ══ DAY ══ -->
 <div id="day" class="screen">
-  <div class="s-header">
-    <div class="back-btn" onclick="go('home')">←</div>
-    <div class="s-title">Day Plan</div>
-  </div>
+  <div class="s-header"><div class="back-btn" onclick="go('home')">←</div><div class="s-title">Day Plan</div></div>
   <div class="day-tabs" id="dayTabs"></div>
   <div class="s-body" id="dayBody"></div>
 </div>
 
-<!-- ══ WEATHER ══ -->
 <div id="weather" class="screen">
-  <div class="s-header">
-    <div class="back-btn" onclick="go('home')">←</div>
-    <div class="s-title">Weather</div>
-  </div>
+  <div class="s-header"><div class="back-btn" onclick="go('home')">←</div><div class="s-title">Weather</div></div>
   <div class="wx-loc-tabs">
     <div class="wlt active" onclick="setWxGeo(this)">現在位置</div>
     <div class="wlt" data-name="大阪" data-lat="34.6937" data-lng="135.5023" onclick="setWxFixed(this)">大阪</div>
@@ -476,12 +252,8 @@ body::before{
   <div class="s-body"><div id="wxBox"><div class="wx-loading">載入中…</div></div></div>
 </div>
 
-<!-- ══ COST ══ -->
 <div id="cost" class="screen">
-  <div class="s-header">
-    <div class="back-btn" onclick="go('home')">←</div>
-    <div class="s-title">Cost</div>
-  </div>
+  <div class="s-header"><div class="back-btn" onclick="go('home')">←</div><div class="s-title">Cost</div></div>
   <div class="s-body">
     <div class="cost-total-card">
       <div style="flex:1">
@@ -490,17 +262,10 @@ body::before{
         <div class="ct-sub" id="totalJPY">¥ 0</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;text-align:right">
-        <div>
-          <div class="ct-label">現金花費</div>
-          <div class="ct-jpy" id="totalCashJPY">¥ 0</div>
-        </div>
-        <div>
-          <div class="ct-label">刷卡花費</div>
-          <div class="ct-jpy" id="totalCardJPY">¥ 0</div>
-        </div>
+        <div><div class="ct-label">現金花費</div><div class="ct-jpy" id="totalCashJPY">¥ 0</div></div>
+        <div><div class="ct-label">刷卡花費</div><div class="ct-jpy" id="totalCardJPY">¥ 0</div></div>
       </div>
     </div>
-    <!-- 現金預算卡：輸入框固定寬度，剩餘欄不被擠 -->
     <div class="cost-total-card" style="margin-bottom:12px;flex-direction:column;gap:10px">
       <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
         <div class="ct-label" style="margin:0">攜帶現金預算 (¥)</div>
@@ -522,10 +287,7 @@ body::before{
       <label class="cf-lbl">匯率 Rate</label>
       <input class="cf-in" id="cf-rate" type="number" value="0.21" step="0.01">
       <label class="cf-lbl">付款方式 Payment</label>
-      <select class="cf-sel" id="cf-pay">
-        <option value="Cash">Cash</option>
-        <option value="Card">Card</option>
-      </select>
+      <select class="cf-sel" id="cf-pay"><option value="Cash">Cash</option><option value="Card">Card</option></select>
       <div class="cf-row">
         <div>
           <label class="cf-lbl">外幣 (¥)</label>
@@ -539,12 +301,9 @@ body::before{
       </div>
       <label class="cf-lbl">天數 Day</label>
       <select class="cf-sel" id="cf-day">
-        <option value="第01天">第01天 · 04/11</option>
-        <option value="第02天">第02天 · 04/12</option>
-        <option value="第03天">第03天 · 04/13</option>
-        <option value="第04天">第04天 · 04/14</option>
-        <option value="第05天">第05天 · 04/15</option>
-        <option value="第06天">第06天 · 04/16</option>
+        <option value="第01天">第01天 · 04/11</option><option value="第02天">第02天 · 04/12</option>
+        <option value="第03天">第03天 · 04/13</option><option value="第04天">第04天 · 04/14</option>
+        <option value="第05天">第05天 · 04/15</option><option value="第06天">第06天 · 04/16</option>
       </select>
       <label class="cf-lbl">備註 Note</label>
       <input class="cf-in" id="cf-note" type="text" placeholder="選填">
@@ -555,61 +314,50 @@ body::before{
   </div>
 </div>
 
-</div><!-- #app -->
+</div>
 <div class="update-toast" id="updateToast" onclick="applyUpdate()">有新版本，點此更新</div>
 
 <script>
-const NOTION_WORKER_URL = 'https://traveluse.jouyu-chen-jc.workers.dev';
-const NOTION_DB_ID = '14f85e19d1c681adb0aded1cb7b14eab';
-const NOTION_DIRECT_TOKEN = '';
+const NOTION_WORKER_URL='https://traveluse.jouyu-chen-jc.workers.dev';
+const NOTION_DB_ID='14f85e19d1c681adb0aded1cb7b14eab';
+const NOTION_DIRECT_TOKEN='';
+const NANKAI='https://www.nankai.co.jp/tc_railway/access-timetable?utm_source=fmo_tc&utm_medium=redirect&utm_campaign=access-timetable';
 
-const DAYS = {
-  '第01天':{date:'2026-04-11',
-    overview:'KIX 抵達 → 飯店 堺筋本町 → 中崎町探索',
-    items:[
-      {name:'前往飯店',note:'① 南海空港急行 KIX → 難波（約 45 分）\n② 難波 → 地下鐵堺筋線 → 堺筋本町\n全程約 65–70 分鐘',lat:34.68249,lng:135.50565},
-      {name:'中崎町',note:'堺筋本町 → 堺筋線 → 天神橋筋六丁目\n→ 谷町線 → 中崎町（約 20–25 分鐘）',lat:34.70753,lng:135.51066},
-    ]},
-  '第02天':{date:'2026-04-12',
-    overview:'石清水八幡宮 → 飛行神社 → 男山展望台 → 檀王法林寺（京都）→ 回大阪',
-    items:[
-      {name:'出發 → 石清水八幡宮',note:'堺筋本町 → 中央線 → 本町 → 御堂筋線 → 淀屋橋\n淀屋橋 → 京阪本線特急 → 石清水八幡宮站\n約 70–80 分鐘',lat:34.8774,lng:135.70019},
-      {name:'石清水八幡宮站 → 纜車上山',note:'出站照「ケーブル」指標走（約5分）\n搭男山ケーブル（約3分）→ 直達山頂\n09:00 起每15分鐘一班 · 纜車需額外費用',lat:34.8774,lng:135.70019},
-      {name:'男山展望台',note:'看三川匯流（宇治川・桂川・木津川）',lat:34.8774,lng:135.70019},
-      {name:'飛行神社',note:'石清水八幡宮站 → 京阪電車 1 站 → 八幡市站\n近代航空 × 信仰主題神社',lat:34.8724,lng:135.7042},
-      {name:'檀王法林寺（京都三条）',note:'11:25 石清水八幡宮站發車 → 京阪本線特急\n12:01 三条站抵達（全程不用換車）\n12:05 出站步行即到，三條通向東約 30m\n\n12:05–13:00 境內自由參觀本堂\n12:00–13:00 午休時段，先在外面逛\n13:00–13:20 本堂參觀\n\n黑色招財貓與朱印在本堂旁事務所\n開放：9:00–12:00 / 13:00–16:00\n費用：本堂參拜 300 日幣\n\n記得也幫琦帶一隻黑色招財貓！',lat:35.00993,lng:135.77338},
-      {name:'回大阪',note:'三条 → 京阪本線 → 淀屋橋 → 御堂筋線 → 本町\n→ 中央線 → 堺筋本町',lat:34.68249,lng:135.50565},
-    ]},
-  '第03天':{date:'2026-04-13',
-    overview:'08:00 出發神戶 → 北野異人館 → 舞子・明石海峽大橋 → 回大阪',
-    items:[
-      {name:'08:00 出發 → 神戶三宮',note:'堺筋本町 → 中央線 → 本町 → 御堂筋線 → 梅田\nJR 大阪站 → 新快速 → 三宮\n全程約 55–65 分鐘',lat:34.6913,lng:135.1956},
-      {name:'北野異人館區',note:'從三宮站「北野坂」方向走上坡約 15–20 分鐘',lat:34.7033,lng:135.1874},
-      {name:'三宮 → 舞子（明石海峽大橋）',note:'JR 三宮站 → JR 新快速 → 舞子站\n約 20–25 分鐘',lat:34.6403,lng:135.0196},
-      {name:'舞子 → 大阪（回程）',note:'JR 舞子 → JR 新快速 → 大阪站\n→ 御堂筋線 → 本町 → 中央線 → 堺筋本町\n約 45 分鐘',lat:34.68249,lng:135.50565},
-    ]},
-  '第04天':{date:'2026-04-14',
-    overview:'舞洲海濱公園 → 返回市區午餐 → 住吉大社 → 回住宿',
-    items:[
-      {name:'前往舞洲海濱公園',note:'① 堺筋本町 → 中央線 → コスモスクエア（約20分）\n② コスモスクエア → 舞洲アクティブバス\n→ 舞洲スポーツアイランド（約15分）',lat:34.6636,lng:135.4354},
-      {name:'返回市區 + 午餐',note:'舞洲緑地前 → 北港観光バス 2系統（¥230 約13分）→ 桜島駅\nJRゆめ咲線 → 西九条 → 環状線 → 新今宮\n南海本線 → 住吉大社駅',busUrl:'http://hokkohbus.co.jp/route/active',lat:null,lng:null},
-      {name:'住吉大社',note:'住吉大社駅から步行約3分\n太鼓橋（反橋）・住吉造本殿',lat:34.61281,lng:135.49313},
-      {name:'回大阪住宿',note:'住吉大社駅 → 南海本線 → 難波\n御堂筋線 → 本町 → 中央線 → 堺筋本町',lat:34.68249,lng:135.50565},
-    ]},
-  '第05天':{date:'2026-04-15',
-    overview:'勝尾寺 → 中之島公園 → 大阪市中央公會堂 → 回住宿',
-    items:[
-      {name:'勝尾寺',note:'① 堺筋本町 → 中央線 → 本町\n② 本町 → 御堂筋線 → 千里中央（終點）\n③ 千里中央 → 阪急巴士（往勝尾寺）\n約 80–90 分鐘（含等車）',lat:34.8596,lng:135.5047},
-      {name:'中之島公園',note:'薔薇花季・水邊散步',lat:34.69249,lng:135.50764},
-      {name:'大阪市中央公會堂',note:'歐式建築 · 中之島象徵',lat:34.69353,lng:135.50398},
-      {name:'回大阪住宿',note:'中之島 → 地下鐵肥後橋 → 本町 → 堺筋本町',lat:34.68249,lng:135.50565},
-    ]},
-  '第06天':{date:'2026-04-16',
-    overview:'大鳥大社 → 前往 KIX · 19:05 CI0173 回台',
-    items:[
-      {name:'大鳥大社',note:'① 堺筋本町 → 中央線 → 本町\n② 本町 → 御堂筋線 → なんば\n③ 難波 → 南海本線 → 鳳站\n約 50–60 分鐘',lat:34.53659,lng:135.46056},
-      {name:'前往 KIX 機場',note:'鳳站 → 南海本線 → 難波 → 南海空港線 → KIX\n建議 16:00 前抵達機場',lat:34.4347,lng:135.2440},
-    ]},
+const DAYS={
+  '第01天':{date:'2026-04-11',overview:'KIX 抵達 → 飯店 堺筋本町 → 中崎町探索',items:[
+    {name:'前往飯店',note:'① 南海空港急行 KIX → 難波（約 45 分）\n② 難波 → 地下鐵堺筋線 → 堺筋本町\n全程約 65–70 分鐘',lat:34.68249,lng:135.50565,ttUrl:NANKAI},
+    {name:'中崎町',note:'堺筋本町 → 堺筋線 → 天神橋筋六丁目\n→ 谷町線 → 中崎町（約 20–25 分鐘）',lat:34.70753,lng:135.51066},
+  ]},
+  '第02天':{date:'2026-04-12',overview:'石清水八幡宮 → 飛行神社 → 男山展望台 → 檀王法林寺（京都）→ 回大阪',items:[
+    {name:'出發 → 石清水八幡宮',note:'堺筋本町 → 中央線 → 本町 → 御堂筋線 → 淀屋橋\n淀屋橋 → 京阪本線特急 → 石清水八幡宮站\n約 70–80 分鐘',lat:34.8774,lng:135.70019},
+    {name:'石清水八幡宮站 → 纜車上山',note:'出站照「ケーブル」指標走（約5分）\n搭男山ケーブル（約3分）→ 直達山頂\n09:00 起每15分鐘一班 · 纜車需額外費用',lat:34.8774,lng:135.70019},
+    {name:'男山展望台',note:'看三川匯流（宇治川・桂川・木津川）',lat:34.8774,lng:135.70019},
+    {name:'飛行神社',note:'石清水八幡宮站 → 京阪電車 1 站 → 八幡市站\n近代航空 × 信仰主題神社',lat:34.8724,lng:135.7042},
+    {name:'檀王法林寺（京都三条）',note:'11:25 石清水八幡宮站發車 → 京阪本線特急\n12:01 三条站抵達（全程不用換車）\n12:05 出站步行即到，三條通向東約 30m\n\n12:05–13:00 境內自由參觀本堂\n12:00–13:00 午休時段，先在外面逛\n13:00–13:20 本堂參觀\n\n黑色招財貓與朱印在本堂旁事務所\n開放：9:00–12:00 / 13:00–16:00\n費用：本堂參拜 300 日幣\n\n記得也幫琦帶一隻黑色招財貓！',lat:35.00993,lng:135.77338},
+    {name:'回大阪',note:'三条 → 京阪本線 → 淀屋橋 → 御堂筋線 → 本町\n→ 中央線 → 堺筋本町',lat:34.68249,lng:135.50565},
+  ]},
+  '第03天':{date:'2026-04-13',overview:'08:00 出發神戶 → 北野異人館 → 舞子・明石海峽大橋 → 回大阪',items:[
+    {name:'08:00 出發 → 神戶三宮',note:'堺筋本町 → 中央線 → 本町 → 御堂筋線 → 梅田\nJR 大阪站 → 新快速 → 三宮\n全程約 55–65 分鐘',lat:34.6913,lng:135.1956},
+    {name:'北野異人館區',note:'從三宮站「北野坂」方向走上坡約 15–20 分鐘',lat:34.7033,lng:135.1874},
+    {name:'三宮 → 舞子（明石海峽大橋）',note:'JR 三宮站 → JR 新快速 → 舞子站\n約 20–25 分鐘',lat:34.6403,lng:135.0196},
+    {name:'舞子 → 大阪（回程）',note:'JR 舞子 → JR 新快速 → 大阪站\n→ 御堂筋線 → 本町 → 中央線 → 堺筋本町\n約 45 分鐘',lat:34.68249,lng:135.50565},
+  ]},
+  '第04天':{date:'2026-04-14',overview:'舞洲海濱公園 → 返回市區午餐 → 住吉大社 → 回住宿',items:[
+    {name:'前往舞洲海濱公園',note:'① 堺筋本町 → 中央線 → コスモスクエア（約20分）\n② コスモスクエア → 舞洲アクティブバス\n→ 舞洲スポーツアイランド（約15分）',lat:34.6636,lng:135.4354},
+    {name:'返回市區 + 午餐',note:'舞洲緑地前 → 北港観光バス 2系統（¥230 約13分）→ 桜島駅\nJRゆめ咲線 → 西九条 → 環状線 → 新今宮\n南海本線 → 住吉大社駅',busUrl:'http://hokkohbus.co.jp/route/active',lat:null,lng:null},
+    {name:'住吉大社',note:'住吉大社駅から步行約3分\n太鼓橋（反橋）・住吉造本殿',lat:34.61281,lng:135.49313},
+    {name:'回大阪住宿',note:'住吉大社駅 → 南海本線 → 難波\n御堂筋線 → 本町 → 中央線 → 堺筋本町',lat:34.68249,lng:135.50565},
+  ]},
+  '第05天':{date:'2026-04-15',overview:'勝尾寺 → 中之島公園 → 大阪市中央公會堂 → 回住宿',items:[
+    {name:'勝尾寺',note:'① 堺筋本町 → 中央線 → 本町\n② 本町 → 御堂筋線 → 千里中央（終點）\n③ 千里中央 → 阪急巴士（往勝尾寺）\n約 80–90 分鐘（含等車）',lat:34.8596,lng:135.5047},
+    {name:'中之島公園',note:'薔薇花季・水邊散步',lat:34.69249,lng:135.50764},
+    {name:'大阪市中央公會堂',note:'歐式建築 · 中之島象徵',lat:34.69353,lng:135.50398},
+    {name:'回大阪住宿',note:'中之島 → 地下鐵肥後橋 → 本町 → 堺筋本町',lat:34.68249,lng:135.50565},
+  ]},
+  '第06天':{date:'2026-04-16',overview:'大鳥大社 → 前往 KIX · 19:05 CI0173 回台',items:[
+    {name:'大鳥大社',note:'① 堺筋本町 → 中央線 → 本町\n② 本町 → 御堂筋線 → なんば\n③ 難波 → 南海本線 → 鳳站\n約 50–60 分鐘',lat:34.53659,lng:135.46056},
+    {name:'前往 KIX 機場',note:'鳳站 → 南海本線 → 難波 → 南海空港線 → KIX\n建議 16:00 前抵達機場',lat:34.4347,lng:135.2440,ttUrl:NANKAI},
+  ]},
 };
 const DAY_ORDER=['第01天','第02天','第03天','第04天','第05天','第06天'];
 
@@ -621,39 +369,39 @@ function go(id){
   if(id==='cost') loadCostTotals();
 }
 
-// ── DAY ──────────────────────────────────────────────
+// DAY
 let activeDay='第01天';
 let arrivedSet=JSON.parse(localStorage.getItem('osaka_arrived')||'{}');
 function saveArrived(){localStorage.setItem('osaka_arrived',JSON.stringify(arrivedSet));}
-function toggleArrived(key,i){
-  arrivedSet[`${key}:${i}`]=!arrivedSet[`${key}:${i}`];
-  saveArrived(); renderDay(key);
-}
+function toggleArrived(key,i){arrivedSet[`${key}:${i}`]=!arrivedSet[`${key}:${i}`];saveArrived();renderDay(key);}
 function getUnote(key,i){return localStorage.getItem(`unote:${key}:${i}`)||'';}
-function saveUnote(key,i,val){
-  if(val.trim()) localStorage.setItem(`unote:${key}:${i}`,val);
-  else localStorage.removeItem(`unote:${key}:${i}`);
-}
+function saveUnote(key,i,val){if(val.trim())localStorage.setItem(`unote:${key}:${i}`,val);else localStorage.removeItem(`unote:${key}:${i}`);}
 let unoteTimer=null;
 function onUnoteInput(key,i,el){
+  // ── auto-resize ──
+  el.style.height='auto';
+  el.style.height=el.scrollHeight+'px';
   saveUnote(key,i,el.value);
   const btn=document.getElementById(`utbtn:${key}:${i}`);
-  if(btn) btn.className='unote-toggle'+(el.value.trim()?' filled':'');
+  if(btn)btn.className='unote-toggle'+(el.value.trim()?' filled':'');
   const saved=document.getElementById(`utsvd:${key}:${i}`);
-  if(saved){
-    saved.classList.add('show');
-    clearTimeout(unoteTimer);
-    unoteTimer=setTimeout(()=>saved.classList.remove('show'),1500);
-  }
+  if(saved){saved.classList.add('show');clearTimeout(unoteTimer);unoteTimer=setTimeout(()=>saved.classList.remove('show'),1500);}
 }
 function toggleUnote(key,i){
   const wrap=document.getElementById(`utwrap:${key}:${i}`);
-  if(!wrap) return;
+  if(!wrap)return;
   const open=wrap.style.display==='none'||!wrap.style.display;
   wrap.style.display=open?'block':'none';
-  if(open) wrap.querySelector('textarea')?.focus();
+  if(open){
+    const ta=wrap.querySelector('textarea');
+    if(ta){
+      ta.focus();
+      // resize on open
+      ta.style.height='auto';
+      ta.style.height=ta.scrollHeight+'px';
+    }
+  }
 }
-
 function buildDayTabs(){
   const today=new Date().toISOString().slice(0,10);
   let auto=DAY_ORDER[0];
@@ -681,20 +429,19 @@ function pickDay(key){
 }
 function renderDay(key){
   const body=document.getElementById('dayBody');
-  const d=DAYS[key]; if(!d) return;
+  const d=DAYS[key];if(!d)return;
   const DZL=['日','一','二','三','四','五','六'];
   const dt=new Date(d.date);
   const dtLbl=`${dt.getMonth()+1}月${dt.getDate()}日（${DZL[dt.getDay()]}）`;
   let html=`<div class="ov-card"><div class="ov-lbl">Overview · ${dtLbl}</div><div class="ov-text">${d.overview}</div></div>`;
   const pending=[],done=[];
-  d.items.forEach((item,i)=>{
-    (arrivedSet[`${key}:${i}`]?done:pending).push({item,i});
-  });
+  d.items.forEach((item,i)=>{(arrivedSet[`${key}:${i}`]?done:pending).push({item,i});});
   const mkCard=({item,i})=>{
     const isArrived=!!arrivedSet[`${key}:${i}`];
     const num=String(i+1).padStart(2,'0');
     const mapBtn=item.lat?`<a class="spot-map" href="https://maps.google.com/maps?q=${item.lat},${item.lng}" target="_blank">Maps</a>`:'';
     const busBtn=item.busUrl?`<a class="spot-map" href="${item.busUrl}" target="_blank" style="margin-left:6px">Bus 時刻表</a>`:'';
+    const ttBtn=item.ttUrl?`<a class="spot-map" href="${item.ttUrl}" target="_blank" style="margin-left:6px">南海時刻表</a>`:'';
     const arrivedBtn=`<span class="spot-arrived-btn" onclick="toggleArrived('${key}',${i})">${isArrived?'↩ 取消':'✓ 已抵達'}</span>`;
     const uNote=getUnote(key,i);
     const noteToggle=`<span class="unote-toggle${uNote?' filled':''}" id="utbtn:${key}:${i}" onclick="toggleUnote('${key}',${i})">${uNote?'備注 ✎':'+ 備注'}</span>`;
@@ -707,7 +454,7 @@ function renderDay(key){
       <div class="spot-num">${num}</div>
       <div class="spot-name">${item.name}</div>
       ${note}
-      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0">${mapBtn}${busBtn}${arrivedBtn}${noteToggle}</div>
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0">${mapBtn}${busBtn}${ttBtn}${arrivedBtn}${noteToggle}</div>
       ${noteWrap}
     </div>`;
   };
@@ -716,39 +463,66 @@ function renderDay(key){
     html+=`<div style="font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin:14px 0 8px;padding-left:2px">已抵達</div>`;
     done.forEach(e=>{html+=mkCard(e);});
   }
-  body.innerHTML=html; body.scrollTop=0;
+  body.innerHTML=html;body.scrollTop=0;
 }
 
-// ── WEATHER ──────────────────────────────────────────
+// WEATHER — SVG icons, 16px
 const WD={0:'晴天',1:'晴朗',2:'多雲',3:'陰天',45:'有霧',48:'凍霧',51:'毛毛雨',53:'毛毛雨',55:'毛毛雨',61:'小雨',63:'中雨',65:'大雨',71:'小雪',73:'中雪',75:'大雪',80:'陣雨',81:'陣雨',82:'大陣雨',95:'雷雨',96:'雷雨',99:'強雷雨'};
-const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
-/* 天氣用拜幾，日=週日 */
 const DZ=['日','拜一','拜二','拜三','拜四','拜五','拜六'];
 let wxBusy=false;
 
+// Generate weather SVG by WMO code
+function wxSvg(code,sz){
+  sz=sz||24;
+  const h=sz/2;
+  // sun
+  const sun=(x,y,r)=>{
+    let rays='';
+    for(let k=0;k<8;k++){const a=k*Math.PI/4;const x1=x+Math.cos(a)*(r+1.5),y1=y+Math.sin(a)*(r+1.5),x2=x+Math.cos(a)*(r+sz*0.14),y2=y+Math.sin(a)*(r+sz*0.14);rays+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#f5a623" stroke-width="${(sz*0.07).toFixed(1)}" stroke-linecap="round"/>`;}
+    return`${rays}<circle cx="${x}" cy="${y}" r="${r}" fill="#f5a623"/>`;
+  };
+  const cloud=(cx,cy,w,col,op)=>{op=op||1;return`<g opacity="${op}"><ellipse cx="${(cx-w*.18).toFixed(1)}" cy="${cy}" rx="${(w*.32).toFixed(1)}" ry="${(w*.22).toFixed(1)}" fill="${col}"/><ellipse cx="${(cx+w*.1).toFixed(1)}" cy="${(cy-w*.1).toFixed(1)}" rx="${(w*.24).toFixed(1)}" ry="${(w*.2).toFixed(1)}" fill="${col}"/><ellipse cx="${(cx+w*.25).toFixed(1)}" cy="${(cy+w*.04).toFixed(1)}" rx="${(w*.2).toFixed(1)}" ry="${(w*.17).toFixed(1)}" fill="${col}"/><rect x="${(cx-w*.38).toFixed(1)}" y="${cy}" width="${(w*.63).toFixed(1)}" height="${(w*.22).toFixed(1)}" rx="${(w*.05).toFixed(1)}" fill="${col}"/></g>`};
+  const drop=(x,y,r,col)=>`<ellipse cx="${x}" cy="${(y+r*.2).toFixed(1)}" rx="${(r*.55).toFixed(1)}" ry="${(r*.7).toFixed(1)}" fill="${col}" opacity="0.85"/>`;
+  const flake=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#90caf9"/><line x1="${(x-r*2).toFixed(1)}" y1="${y}" x2="${(x+r*2).toFixed(1)}" y2="${y}" stroke="#90caf9" stroke-width="${(r*.8).toFixed(1)}"/><line x1="${x}" y1="${(y-r*2).toFixed(1)}" x2="${x}" y2="${(y+r*2).toFixed(1)}" stroke="#90caf9" stroke-width="${(r*.8).toFixed(1)}"/>`;
+  const bolt=`<polyline points="${(h-2)},${(h-2)} ${(h-4)},${(h+1)} ${(h-1)},${(h+1)} ${(h-3.5)},${(h+5)}" fill="none" stroke="#f5c23a" stroke-width="1.8" stroke-linejoin="round"/>`;
+
+  let inner='';
+  if(code===0){inner=sun(h,h,h*.3);}
+  else if(code===1){inner=sun(h*.58,h*.52,h*.22)+cloud(h*1.1,h*1.05,sz*.52,'#dde8f0');}
+  else if(code===2){inner=sun(h*.55,h*.5,h*.18)+cloud(h*1.05,h*1.05,sz*.6,'#c8d8e8');}
+  else if(code===3){inner=cloud(h*.88,h*.8,sz*.65,'#b0bec5')+cloud(h*1.02,h*1.1,sz*.72,'#cfd8dc',.82);}
+  else if(code>=45&&code<=48){
+    [.4,.58,.76,.94,1.12].forEach((fy,fi)=>{inner+=`<line x1="${(sz*.12).toFixed(1)}" y1="${(sz*fy).toFixed(1)}" x2="${(sz*.88).toFixed(1)}" y2="${(sz*fy).toFixed(1)}" stroke="#b0bec5" stroke-width="${fi%2?1.4:2}" stroke-linecap="round" opacity=".65"/>`;});
+  }
+  else if(code>=51&&code<=55){inner=cloud(h,h*.72,sz*.7,'#cfd8dc')+drop(h-sz*.12,h*1.42,sz*.1,'#82b1d4')+drop(h+sz*.12,h*1.52,sz*.1,'#82b1d4');}
+  else if(code>=61&&code<=65){
+    const n=code>=65?4:code>=63?3:2;
+    inner=cloud(h,h*.7,sz*.7,'#90a4ae');
+    for(let di=0;di<n;di++)inner+=drop(h-sz*.15+di*sz*.1,h*1.42+(di%2)*sz*.08,sz*.11,'#5c9fc9');
+  }
+  else if(code>=71&&code<=75){inner=cloud(h,h*.72,sz*.7,'#b0bec5')+flake(h-sz*.14,h*1.48,sz*.06)+flake(h+sz*.14,h*1.52,sz*.06);}
+  else if(code>=80&&code<=82){inner=cloud(h*.82,h*.62,sz*.62,'#78909c')+sun(h*1.45,h*.38,h*.18)+drop(h-sz*.1,h*1.4,sz*.11,'#5c9fc9')+drop(h+sz*.08,h*1.5,sz*.11,'#5c9fc9');}
+  else if(code>=95){inner=cloud(h,h*.68,sz*.72,'#546e7a')+bolt;}
+  else{inner=sun(h,h,h*.3);}
+  return`<svg viewBox="0 0 ${sz} ${sz}" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
+}
+
 function setWxGeo(el){
-  document.querySelectorAll('.wlt').forEach(e=>e.classList.remove('active'));
-  el.classList.add('active');
+  document.querySelectorAll('.wlt').forEach(e=>e.classList.remove('active'));el.classList.add('active');
   document.getElementById('wxBox').innerHTML='<div class="wx-loading">取得位置中…</div>';
   if(!navigator.geolocation){document.getElementById('wxBox').innerHTML='<div class="wx-loading">此裝置不支援定位</div>';return;}
-  navigator.geolocation.getCurrentPosition(
-    pos=>fetchWx(pos.coords.latitude,pos.coords.longitude,'現在位置'),
-    ()=>{document.getElementById('wxBox').innerHTML='<div class="wx-loading">無法取得位置，請允許定位權限</div>';}
-  );
+  navigator.geolocation.getCurrentPosition(pos=>fetchWx(pos.coords.latitude,pos.coords.longitude,'現在位置'),()=>{document.getElementById('wxBox').innerHTML='<div class="wx-loading">無法取得位置，請允許定位權限</div>';});
 }
 function setWxFixed(el){
-  document.querySelectorAll('.wlt').forEach(e=>e.classList.remove('active'));
-  el.classList.add('active');
+  document.querySelectorAll('.wlt').forEach(e=>e.classList.remove('active'));el.classList.add('active');
   fetchWx(parseFloat(el.dataset.lat),parseFloat(el.dataset.lng),el.dataset.name);
 }
 function loadWx(){
-  const activeTab=document.querySelector('.wlt.active');
-  if(!activeTab) return;
-  if(activeTab.dataset.lat) fetchWx(parseFloat(activeTab.dataset.lat),parseFloat(activeTab.dataset.lng),activeTab.dataset.name);
-  else setWxGeo(activeTab);
+  const t=document.querySelector('.wlt.active');if(!t)return;
+  if(t.dataset.lat)fetchWx(parseFloat(t.dataset.lat),parseFloat(t.dataset.lng),t.dataset.name);else setWxGeo(t);
 }
 async function fetchWx(lat,lng,name){
-  if(wxBusy)return; wxBusy=true;
+  if(wxBusy)return;wxBusy=true;
   document.getElementById('wxBox').innerHTML='<div class="wx-loading">載入中…</div>';
   try{
     const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=7&models=jma_seamless`);
@@ -756,14 +530,13 @@ async function fetchWx(lat,lng,name){
     const cur=d.current,day=d.daily,code=cur.weathercode;
     const fc=[0,1,2,3,4,5,6].map(i=>{
       const dt=new Date(day.time[i]);
-      const dayOfWeek=dt.getDay();
-      /* 今天/明天直接顯示，其餘顯示拜幾＋日期 */
-      const lbl=i===0?'今天':i===1?'明天':DZ[dayOfWeek];
+      const lbl=i===0?'今天':i===1?'明天':DZ[dt.getDay()];
       const ds=`${dt.getMonth()+1}/${dt.getDate()}`;
+      const wc=day.weathercode[i];
       return`<div class="wx-col">
         <div class="wc-name">${lbl}<span class="wc-date">${ds}</span></div>
-        <div class="wc-emoji">${WI[day.weathercode[i]]||'—'}</div>
-        <div class="wc-desc">${WD[day.weathercode[i]]||''}</div>
+        <div class="wc-svg">${wxSvg(wc,26)}</div>
+        <div class="wc-desc">${WD[wc]||''}</div>
         <div class="wc-temps"><span class="wc-hi">${Math.round(day.temperature_2m_max[i])}°</span><span class="wc-lo">${Math.round(day.temperature_2m_min[i])}°</span></div>
       </div>`;
     }).join('');
@@ -775,41 +548,34 @@ async function fetchWx(lat,lng,name){
           <div class="wx-desc-txt">${WD[code]||''}</div>
         </div>
         <div class="wx-right-info">
-          <div class="wx-big-emoji">${WI[code]||''}</div>
+          <div class="wx-big-svg">${wxSvg(code,52)}</div>
           <div class="wx-hilo">↑${Math.round(day.temperature_2m_max[0])}° ↓${Math.round(day.temperature_2m_min[0])}°</div>
         </div>
       </div>
       <div class="wx-row">${fc}</div>
     </div>`;
-  }catch{
-    document.getElementById('wxBox').innerHTML='<div class="wx-loading">無法取得天氣資訊</div>';
-  }finally{wxBusy=false;}
+  }catch{document.getElementById('wxBox').innerHTML='<div class="wx-loading">無法取得天氣資訊</div>';}
+  finally{wxBusy=false;}
 }
 
-// ── COST ─────────────────────────────────────────────
+// COST
 let costRecords=JSON.parse(localStorage.getItem('osaka_costs')||'[]');
 function saveCostLocal(){localStorage.setItem('osaka_costs',JSON.stringify(costRecords));}
 function loadCostTotals(){
   let tw=0,jp=0,cashJP=0,cardJP=0;
-  costRecords.filter(r=>!r.hidden).forEach(r=>{
-    tw+=(r.twd||0);jp+=(r.jpy||0);
-    if((r.pay||'Cash')==='Cash') cashJP+=(r.jpy||0);
-    else cardJP+=(r.jpy||0);
-  });
+  costRecords.filter(r=>!r.hidden).forEach(r=>{tw+=(r.twd||0);jp+=(r.jpy||0);if((r.pay||'Cash')==='Cash')cashJP+=(r.jpy||0);else cardJP+=(r.jpy||0);});
   document.getElementById('totalTWD').textContent=`NT$ ${tw.toLocaleString()}`;
   document.getElementById('totalJPY').textContent=`¥ ${jp.toLocaleString()}`;
   document.getElementById('totalCashJPY').textContent=`¥ ${cashJP.toLocaleString()}`;
   document.getElementById('totalCardJPY').textContent=`¥ ${cardJP.toLocaleString()}`;
   const saved=localStorage.getItem('osaka_cash_budget');
   const budgetEl=document.getElementById('cashBudgetJPY');
-  if(saved&&budgetEl&&!budgetEl.value) budgetEl.value=saved;
-  updateCashDisplay(cashJP);
-  renderCostRecords();
+  if(saved&&budgetEl&&!budgetEl.value)budgetEl.value=saved;
+  updateCashDisplay(cashJP);renderCostRecords();
 }
 let cashSaveTimer=null;
 function onCashBudgetInput(){
-  updateCashDisplay();
-  clearTimeout(cashSaveTimer);
+  updateCashDisplay();clearTimeout(cashSaveTimer);
   cashSaveTimer=setTimeout(()=>{
     const val=document.getElementById('cashBudgetJPY').value;
     localStorage.setItem('osaka_cash_budget',val);
@@ -821,32 +587,25 @@ function updateCashDisplay(cashUsed){
   const budgetEl=document.getElementById('cashBudgetJPY');
   const budget=parseFloat(budgetEl?.value)||0;
   const used=cashUsed!=null?cashUsed:(()=>{let c=0;costRecords.filter(r=>!r.hidden&&(r.pay||'Cash')==='Cash').forEach(r=>c+=(r.jpy||0));return c;})();
-  const remainEl=document.getElementById('cashRemain');
-  if(!remainEl)return;
+  const remainEl=document.getElementById('cashRemain');if(!remainEl)return;
   if(!budget){remainEl.textContent='—';remainEl.style.color='var(--ink)';return;}
   const rem=budget-used;
   remainEl.textContent=`¥ ${rem.toLocaleString()}`;
   remainEl.style.color=rem<0?'#c07070':rem<5000?'#c0a070':'var(--ink)';
 }
 function renderCostRecords(){
-  const el=document.getElementById('costRecordsList');
-  if(!el)return;
+  const el=document.getElementById('costRecordsList');if(!el)return;
   if(!costRecords.length){el.innerHTML='<div class="cr-empty">尚無紀錄</div>';return;}
   const groups={};
   costRecords.forEach((r,i)=>{if(!groups[r.day])groups[r.day]=[];groups[r.day].push({...r,_idx:i});});
-  const dayOrder=['第01天','第02天','第03天','第04天','第05天','第06天'];
   let html='';
-  for(const dk of dayOrder){
+  for(const dk of DAY_ORDER){
     if(!groups[dk])continue;
     html+=`<div class="cr-section-lbl">${dk}</div>`;
     groups[dk].forEach(r=>{
-      const hidden=r.hidden?'hidden-record':'';
-      const eyeBtn=r.hidden?'顯示':'隱藏';
+      const hidden=r.hidden?'hidden-record':'';const eyeBtn=r.hidden?'顯示':'隱藏';
       html+=`<div class="cr-item ${hidden}" id="cr-${r._idx}">
-        <div class="cr-top">
-          <div class="cr-name">${escH(r.name)}</div>
-          <div class="cr-amount">${r.twd?'NT$ '+r.twd.toLocaleString():''}${r.jpy?' · ¥'+r.jpy.toLocaleString():''}</div>
-        </div>
+        <div class="cr-top"><div class="cr-name">${escH(r.name)}</div><div class="cr-amount">${r.twd?'NT$ '+r.twd.toLocaleString():''}${r.jpy?' · ¥'+r.jpy.toLocaleString():''}</div></div>
         <div class="cr-meta">${r.pay||''}${r.note?' · '+escH(r.note):''}</div>
         <div class="cr-actions">
           <button class="cr-btn" onclick="toggleEditRecord(${r._idx})">編輯</button>
@@ -906,50 +665,26 @@ async function saveCost(){
   btn.disabled=true;btn.innerHTML='<span class="spin"></span> 儲存中…';showMsg('');
   costRecords.push({name,jpy:jpy||0,twd:twd||0,day,pay,note,ts:Date.now()});
   saveCostLocal();loadCostTotals();
-  const payload={parent:{database_id:NOTION_DB_ID},properties:{
-    'Name':{title:[{text:{content:name}}]},
-    '旅途的第幾天':{select:{name:day}},
-    '本趟匯率':{number:rate},
-    '備註':{rich_text:[{text:{content:note||''}}]},
-    '國家城市':{select:{name:'日本'}},
-    '封存此趟行程':{checkbox:false},
-    '日期':{date:{start:dateMap[day]}},
-    '付款方式':{select:{name:pay}},
-  }};
-  if(jpy!==null) payload.properties['開銷紀錄 (外幣)']={number:jpy};
-  if(twd!==null) payload.properties['開銷紀錄（台幣）']={number:twd};
+  const payload={parent:{database_id:NOTION_DB_ID},properties:{'Name':{title:[{text:{content:name}}]},'旅途的第幾天':{select:{name:day}},'本趟匯率':{number:rate},'備註':{rich_text:[{text:{content:note||''}}]},'國家城市':{select:{name:'日本'}},'封存此趟行程':{checkbox:false},'日期':{date:{start:dateMap[day]}},'付款方式':{select:{name:pay}}}};
+  if(jpy!==null)payload.properties['開銷紀錄 (外幣)']={number:jpy};
+  if(twd!==null)payload.properties['開銷紀錄（台幣）']={number:twd};
   try{
     let res;
-    try{
-      res=await fetch(NOTION_WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'create',payload})});
-      if(!res.ok) throw new Error('worker:'+res.status);
-    }catch(workerErr){
-      if(!NOTION_DIRECT_TOKEN) throw workerErr;
-      res=await fetch('https://api.notion.com/v1/pages',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+NOTION_DIRECT_TOKEN,'Notion-Version':'2022-06-28'},body:JSON.stringify(payload)});
-      if(!res.ok) throw new Error('direct:'+res.status);
-    }
+    try{res=await fetch(NOTION_WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'create',payload})});if(!res.ok)throw new Error('worker:'+res.status);}
+    catch(workerErr){if(!NOTION_DIRECT_TOKEN)throw workerErr;res=await fetch('https://api.notion.com/v1/pages',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+NOTION_DIRECT_TOKEN,'Notion-Version':'2022-06-28'},body:JSON.stringify(payload)});if(!res.ok)throw new Error('direct:'+res.status);}
     showMsg('✓ 已儲存到 Notion！');
   }catch(e){showMsg('本地已記錄，Notion 同步失敗',true);console.error(e);}
   btn.disabled=false;btn.textContent='Save to Notion';
   ['cf-name','cf-jpy','cf-twd','cf-note'].forEach(id=>document.getElementById(id).value='');
 }
-function showMsg(msg,isErr=false){
-  const el=document.getElementById('saveMsg');
-  el.textContent=msg;el.className='save-msg'+(isErr?' err':'');
-}
+function showMsg(msg,isErr=false){const el=document.getElementById('saveMsg');el.textContent=msg;el.className='save-msg'+(isErr?' err':'');}
 
-// ── SERVICE WORKER ────────────────────────────────────
 let swWaiting=null;
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js').then(reg=>{
     reg.addEventListener('updatefound',()=>{
       const nw=reg.installing;
-      nw.addEventListener('statechange',()=>{
-        if(nw.state==='installed'&&navigator.serviceWorker.controller){
-          swWaiting=nw;
-          document.getElementById('updateToast').classList.add('show');
-        }
-      });
+      nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller){swWaiting=nw;document.getElementById('updateToast').classList.add('show');}});
     });
   });
   navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload());
