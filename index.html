@@ -163,6 +163,16 @@ body::before{
   color:var(--ink2);text-decoration:none;cursor:pointer;transition:all .18s;
 }
 .spot-map:active{transform:scale(.95)}
+/* 已抵達 */
+.spot-arrived-btn{
+  display:inline-flex;align-items:center;gap:4px;margin-top:9px;margin-left:6px;
+  background:rgba(106,163,126,0.1);border:1px solid rgba(106,163,126,0.25);
+  border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;
+  color:#5a9a6e;cursor:pointer;transition:all .18s;
+}
+.spot-arrived-btn:active{transform:scale(.95)}
+.spot-card.arrived{opacity:0.42;border-color:rgba(106,163,126,0.28)}
+.spot-card.arrived .spot-name{text-decoration:line-through;text-decoration-color:rgba(89,89,89,0.35)}
 
 /* ══ WEATHER ══ */
 .wx-loc-tabs{display:flex;gap:8px;flex-shrink:0;padding:0 16px 10px;overflow-x:auto;scrollbar-width:none;background:rgba(243,238,232,0.7)}
@@ -358,8 +368,8 @@ body::before{
         <div class="fc-mid">
           <div class="fc-line">
             <div class="fc-dash"></div>
-            <svg class="fc-plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 16.5L13.5 11.5V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V11.5L2 16.5V18.5L10.5 16V20.5L8.5 22V23.5L12 22.5L15.5 23.5V22L13.5 20.5V16L22 18.5V16.5Z" fill="currentColor"/>
+            <svg class="fc-plane" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="currentColor" transform="rotate(90 12 12)"/>
             </svg>
             <div class="fc-dash"></div>
           </div>
@@ -389,8 +399,8 @@ body::before{
         <div class="fc-mid">
           <div class="fc-line">
             <div class="fc-dash"></div>
-            <svg class="fc-plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 16.5L13.5 11.5V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V11.5L2 16.5V18.5L10.5 16V20.5L8.5 22V23.5L12 22.5L15.5 23.5V22L13.5 20.5V16L22 18.5V16.5Z" fill="currentColor"/>
+            <svg class="fc-plane" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="currentColor" transform="rotate(90 12 12)"/>
             </svg>
             <div class="fc-dash"></div>
           </div>
@@ -535,48 +545,96 @@ const DAYS = {
   '第01天':{date:'2026-04-11',
     overview:'KIX 抵達 → 飯店 堺筋本町 → 中崎町探索',
     items:[
-      {name:'前往飯店',note:'① 南海空港急行 KIX → 難波（約 45 分）\n② 難波 → 地下鐵堺筋線 → 堺筋本町\n全程約 65–70 分鐘',lat:34.68249,lng:135.50565},
-      {name:'中崎町',note:'堺筋本町 → 堺筋線 → 天神橋筋六丁目\n→ 谷町線 → 中崎町（約 20–25 分鐘）',lat:34.70753,lng:135.51066},
+      {name:'前往飯店',
+       note:'① 南海空港急行 KIX → 難波（約 45 分）\n② 難波 → 地下鐵堺筋線 → 堺筋本町\n全程約 65–70 分鐘',
+       lat:34.68249,lng:135.50565},
+      {name:'中崎町',
+       note:'堺筋本町 → 堺筋線 → 天神橋筋六丁目\n→ 谷町線 → 中崎町（約 20–25 分鐘）',
+       lat:34.70753,lng:135.51066},
     ]},
   '第02天':{date:'2026-04-12',
     overview:'石清水八幡宮 → 飛行神社 → 男山展望台 → 檀王法林寺（京都）→ 回大阪',
     items:[
-      {name:'出發 → 石清水八幡宮',note:'堺筋本町 → 中央線 → 本町 → 御堂筋線 → 淀屋橋\n淀屋橋 → 京阪本線特急 → 石清水八幡宮站\n約 70–80 分鐘',lat:34.8774,lng:135.70019},
-      {name:'石清水八幡宮站 → 纜車上山',note:'出站照「ケーブル」指標走（約5分）\n搭男山ケーブル（約3分）→ 直達山頂\n09:00 起每15分鐘一班 · 纜車需額外費用',lat:34.8774,lng:135.70019},
-      {name:'男山展望台',note:'看三川匯流（宇治川・桂川・木津川）',lat:34.8774,lng:135.70019},
-      {name:'飛行神社',note:'石清水八幡宮站 → 京阪電車 1 站 → 八幡市站\n近代航空 × 信仰主題神社',lat:34.8724,lng:135.7042},
-      {name:'檀王法林寺（京都三条）',note:'11:25 石清水八幡宮站發車 → 京阪特急\n12:01 抵三条 · 出站步行即到\n12:05–13:00 境內參觀\n本堂300日幣 · 黑色招財貓在事務所\n（9:00–12:00 / 13:00–16:00）',lat:35.00993,lng:135.77338},
-      {name:'回大阪',note:'三条 → 京阪本線 → 淀屋橋 → 御堂筋線 → 本町\n→ 中央線 → 堺筋本町',lat:34.68249,lng:135.50565},
+      {name:'出發 → 石清水八幡宮',
+       note:'堺筋本町 → 中央線 → 本町 → 御堂筋線 → 淀屋橋\n淀屋橋 → 京阪本線特急 → 石清水八幡宮站\n約 70–80 分鐘',
+       lat:34.8774,lng:135.70019},
+      {name:'石清水八幡宮站 → 纜車上山',
+       note:'出站照「ケーブル」指標走（約5分）\n搭男山ケーブル（約3分）→ 直達山頂\n09:00 起每15分鐘一班 · 纜車需額外費用',
+       lat:34.8774,lng:135.70019},
+      {name:'男山展望台',
+       note:'看三川匯流（宇治川・桂川・木津川）',
+       lat:34.8774,lng:135.70019},
+      {name:'飛行神社',
+       note:'石清水八幡宮站 → 京阪電車 1 站 → 八幡市站\n以「近代航空 × 信仰」為主題',
+       lat:34.8724,lng:135.7042},
+      {name:'檀王法林寺（京都三条）',
+       note:'11:25 石清水八幡宮站發車 → 京阪特急\n12:01 抵三条 · 出站步行即到\n12:05–13:00 境內參觀\n本堂300日幣 · 黑色招財貓在事務所\n（9:00–12:00 / 13:00–16:00）',
+       lat:35.00993,lng:135.77338},
+      {name:'回大阪',
+       note:'三条 → 京阪本線 → 淀屋橋 → 御堂筋線 → 本町\n→ 中央線 → 堺筋本町',
+       lat:34.68249,lng:135.50565},
     ]},
   '第03天':{date:'2026-04-13',
     overview:'08:00 出發神戶 → 北野異人館 → 舞子・明石海峽大橋 → 回大阪',
     items:[
-      {name:'08:00 出發 → 神戶三宮',note:'堺筋本町 → 中央線 → 本町 → 御堂筋線 → 梅田\nJR 大阪站 → 新快速 → 三宮\n全程約 55–65 分鐘',lat:34.6913,lng:135.1956},
-      {name:'北野異人館區',note:'從三宮站「北野坂」方向走上坡約 15–20 分鐘',lat:34.7033,lng:135.1874},
-      {name:'三宮 → 舞子（明石海峽大橋）',note:'JR 三宮站 → JR 新快速 → 舞子站\n約 20–25 分鐘',lat:34.6403,lng:135.0196},
-      {name:'舞子 → 大阪（回程）',note:'JR 舞子 → JR 新快速 → 大阪站\n→ 御堂筋線 → 本町 → 中央線 → 堺筋本町\n約 45 分鐘',lat:34.68249,lng:135.50565},
+      {name:'08:00 出發 → 神戶三宮',
+       note:'堺筋本町 → 中央線 → 本町 → 御堂筋線 → 梅田\nJR 大阪站 → 新快速 → 三宮\n全程約 55–65 分鐘',
+       lat:34.6913,lng:135.1956},
+      {name:'北野異人館區',
+       note:'從三宮站「北野坂」方向走上坡約 15–20 分鐘',
+       lat:34.7033,lng:135.1874},
+      {name:'三宮 → 舞子（明石海峽大橋）',
+       note:'JR 三宮站 → JR 新快速 → 舞子站\n約 20–25 分鐘',
+       lat:34.6403,lng:135.0196},
+      {name:'舞子 → 大阪（回程）',
+       note:'JR 舞子 → JR 新快速 → 大阪站\n→ 御堂筋線 → 本町 → 中央線 → 堺筋本町\n約 45 分鐘',
+       lat:34.68249,lng:135.50565},
     ]},
   '第04天':{date:'2026-04-14',
     overview:'舞洲海濱公園 → 返回市區午餐 → 住吉大社 → 回住宿',
     items:[
-      {name:'前往舞洲海濱公園',note:'① 堺筋本町 → 中央線 → コスモスクエア（約20分）\n② コスモスクエア → 舞洲アクティブバス\n→ 舞洲スポーツアイランド（約15分）',lat:34.6636,lng:135.4354},
-      {name:'返回市區 + 午餐',note:'舞洲緑地前 → 北港観光バス 2系統（¥230 約13分）→ 桜島駅\nJRゆめ咲線 → 西九条 → 環状線 → 新今宮\n南海本線 → 住吉大社駅',lat:null,lng:null},
-      {name:'住吉大社',note:'住吉大社駅から步行約3分\n太鼓橋（反橋）・住吉造本殿',lat:34.61281,lng:135.49313},
-      {name:'回大阪住宿',note:'住吉大社駅 → 南海本線 → 難波\n御堂筋線 → 本町 → 中央線 → 堺筋本町',lat:34.68249,lng:135.50565},
+      {name:'前往舞洲海濱公園',
+       note:'① 堺筋本町 → 中央線 → コスモスクエア（約20分）\n② コスモスクエア → 舞洲アクティブバス\n→ 舞洲スポーツアイランド（約15分）',
+       lat:34.6636,lng:135.4354},
+      {name:'大阪舞洲海濱公園',
+       note:'',
+       lat:34.6636,lng:135.4354},
+      {name:'返回市區 ＋ 午餐',
+       note:'→ 舞洲緑地前 or 大阪シティ信用金庫スタジアム前\n↓ 北港観光バス 2系統（約13分）¥230\n→ 桜島駅\n↓ JRゆめ咲線 → 西九条\n↓ JR大阪環状線 → 新今宮（約15分）\n↓ 南海本線 → 住吉大社駅（約10分）\n→ 住吉大社（駅から步行約3分）\n\n建議在本町／難波一帶吃午餐',
+       busUrl:'http://hokkohbus.co.jp/route/active',
+       lat:null,lng:null},
+      {name:'住吉大社',
+       note:'住吉大社駅から步行約3分\n太鼓橋（反橋）・住吉造本殿（日本最古老神社樣式之一）',
+       lat:34.61281,lng:135.49313},
+      {name:'回大阪住宿',
+       note:'住吉大社駅 → 南海本線 → 難波\n御堂筋線 → 本町 → 中央線 → 堺筋本町\n約 30–35 分鐘',
+       lat:34.68249,lng:135.50565},
     ]},
   '第05天':{date:'2026-04-15',
     overview:'勝尾寺 → 中之島公園 → 大阪市中央公會堂 → 回住宿',
     items:[
-      {name:'勝尾寺',note:'① 堺筋本町 → 中央線 → 本町\n② 本町 → 御堂筋線 → 千里中央（終點）\n③ 千里中央 → 阪急巴士（往勝尾寺）\n約 80–90 分鐘（含等車）',lat:34.8596,lng:135.5047},
-      {name:'中之島公園',note:'薔薇花季・水邊散步',lat:34.69249,lng:135.50764},
-      {name:'大阪市中央公會堂',note:'歐式建築 · 中之島象徵',lat:34.69353,lng:135.50398},
-      {name:'回大阪住宿',note:'中之島 → 地下鐵肥後橋 → 本町 → 堺筋本町',lat:34.68249,lng:135.50565},
+      {name:'勝尾寺',
+       note:'① 堺筋本町 → 中央線 → 本町\n② 本町 → 御堂筋線 → 千里中央（終點）\n③ 千里中央 → 阪急巴士（往勝尾寺）→ 勝尾寺下車\n約 80–90 分鐘（含等車）',
+       lat:34.8596,lng:135.5047},
+      {name:'中之島公園',
+       note:'薔薇花季・水邊散步',
+       lat:34.69249,lng:135.50764},
+      {name:'大阪市中央公會堂',
+       note:'歐式建築 · 中之島象徵',
+       lat:34.69353,lng:135.50398},
+      {name:'回大阪住宿',
+       note:'中之島 → 地下鐵肥後橋 → 本町 → 堺筋本町',
+       lat:34.68249,lng:135.50565},
     ]},
   '第06天':{date:'2026-04-16',
     overview:'大鳥大社 → 前往 KIX · 19:05 CI0173 回台',
     items:[
-      {name:'大鳥大社',note:'① 堺筋本町 → 中央線 → 本町\n② 本町 → 御堂筋線 → なんば\n③ 難波 → 南海本線 → 鳳站\n約 50–60 分鐘',lat:34.53659,lng:135.46056},
-      {name:'前往 KIX 機場',note:'鳳站 → 南海本線 → 難波 → 南海空港線 → KIX\n建議 16:00 前抵達機場',lat:34.4347,lng:135.2440},
+      {name:'大鳥大社',
+       note:'① 堺筋本町 → 中央線 → 本町\n② 本町 → 御堂筋線 → なんば\n③ 難波 → 南海本線 → 鳳站\n約 50–60 分鐘',
+       lat:34.53659,lng:135.46056},
+      {name:'前往 KIX 機場',
+       note:'鳳站 → 南海本線 → 難波 → 南海空港線 → KIX\n建議 16:00 前抵達機場',
+       lat:34.4347,lng:135.2440},
     ]},
 };
 const DAY_ORDER=['第01天','第02天','第03天','第04天','第05天','第06天'];
@@ -592,6 +650,9 @@ function go(id){
 
 // ── DAY ──────────────────────────────────────────────
 let activeDay='第01天';
+let arrivedSet=JSON.parse(localStorage.getItem('osaka_arrived')||'{}');
+function saveArrived(){localStorage.setItem('osaka_arrived',JSON.stringify(arrivedSet));}
+
 function buildDayTabs(){
   const today=new Date().toISOString().slice(0,10);
   let auto=DAY_ORDER[0];
@@ -617,21 +678,49 @@ function pickDay(key){
   document.querySelector('.dt.active')?.scrollIntoView({inline:'center',block:'nearest'});
   renderDay(key);
 }
+function toggleArrived(key,i){
+  const k=`${key}:${i}`;
+  arrivedSet[k]=!arrivedSet[k];
+  saveArrived();
+  renderDay(key);
+}
 function renderDay(key){
   const body=document.getElementById('dayBody');
   const d=DAYS[key]; if(!d) return;
-  const DZ=['日','一','二','三','四','五','六'];
+  const DZ2=['日','一','二','三','四','五','六'];
   const dt=new Date(d.date);
-  const dtLbl=`${dt.getMonth()+1}月${dt.getDate()}日（${DZ[dt.getDay()]}）`;
+  const dtLbl=`${dt.getMonth()+1}月${dt.getDate()}日（${DZ2[dt.getDay()]}）`;
   let html=`<div class="ov-card"><div class="ov-lbl">Overview · ${dtLbl}</div><div class="ov-text">${d.overview}</div></div>`;
+
+  const pending=[], done=[];
   d.items.forEach((item,i)=>{
+    (arrivedSet[`${key}:${i}`] ? done : pending).push({item,i});
+  });
+
+  const mkCard=({item,i})=>{
+    const isArrived=!!arrivedSet[`${key}:${i}`];
     const num=String(i+1).padStart(2,'0');
     const mapBtn=item.lat
-      ?`<a class="spot-map" href="https://maps.google.com/maps?q=${item.lat},${item.lng}" target="_blank">Maps で開く</a>`
+      ?`<a class="spot-map" href="https://maps.google.com/maps?q=${item.lat},${item.lng}" target="_blank">Maps</a>`
       :'';
+    const busBtn=item.busUrl
+      ?`<a class="spot-map" href="${item.busUrl}" target="_blank" style="margin-left:6px">Bus 時刻表</a>`
+      :'';
+    const arrivedBtn=`<span class="spot-arrived-btn" onclick="toggleArrived('${key}',${i})">${isArrived?'↩ 取消':'✓ 已抵達'}</span>`;
     const note=item.note?`<div class="spot-note">${item.note.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div>`:'';
-    html+=`<div class="spot-card"><div class="spot-num">${num}</div><div class="spot-name">${item.name}</div>${note}${mapBtn}</div>`;
-  });
+    return`<div class="spot-card${isArrived?' arrived':''}">
+      <div class="spot-num">${num}</div>
+      <div class="spot-name">${item.name}</div>
+      ${note}
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0">${mapBtn}${busBtn}${arrivedBtn}</div>
+    </div>`;
+  };
+
+  pending.forEach(e=>{ html+=mkCard(e); });
+  if(done.length){
+    html+=`<div style="font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin:14px 0 8px;padding-left:2px">已抵達</div>`;
+    done.forEach(e=>{ html+=mkCard(e); });
+  }
   body.innerHTML=html; body.scrollTop=0;
 }
 
@@ -676,8 +765,9 @@ async function fetchWx(lat,lng,name){
     const cur=d.current,day=d.daily,code=cur.weathercode;
     const fc=[0,1,2,3,4,5,6].map(i=>{
       const dt=new Date(day.time[i]);
-      const lbl=i===0?'今天':i===1?'明天':DZ[dt.getDay()];
-      return`<div class="wx-col"><div class="wc-name">${lbl}</div><div class="wc-emoji">${WI[day.weathercode[i]]||'—'}</div><div class="wc-desc">${WD[day.weathercode[i]]||''}</div><div class="wc-temps"><span class="wc-hi">${Math.round(day.temperature_2m_max[i])}°</span><span class="wc-lo">${Math.round(day.temperature_2m_min[i])}°</span></div></div>`;
+      const dayLabel=i===0?'今天':i===1?'明天':DZ[dt.getDay()];
+      const dateStr=`${dt.getMonth()+1}/${dt.getDate()}`;
+      return`<div class="wx-col"><div class="wc-name">${dayLabel}<span style="font-size:9px;color:var(--ink4);margin-left:3px">${dateStr}</span></div><div class="wc-emoji">${WI[day.weathercode[i]]||'—'}</div><div class="wc-desc">${WD[day.weathercode[i]]||''}</div><div class="wc-temps"><span class="wc-hi">${Math.round(day.temperature_2m_max[i])}°</span><span class="wc-lo">${Math.round(day.temperature_2m_min[i])}°</span></div></div>`;
     }).join('');
     document.getElementById('wxBox').innerHTML=`<div class="wx-now">
       <div class="wx-top">
