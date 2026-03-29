@@ -490,11 +490,12 @@ body::before{
       <div class="cf-row">
         <div>
           <label class="cf-lbl">外幣 (¥)</label>
-          <input class="cf-in" id="cf-jpy" type="number" placeholder="0" oninput="calcTwd()">
+          <input class="cf-in" id="cf-jpy" type="number" placeholder="0" oninput="showJpyHint()">
+          <div id="jpy-hint" style="font-size:11px;color:var(--ink3);margin-top:-9px;margin-bottom:10px;padding-left:2px"></div>
         </div>
         <div>
           <label class="cf-lbl">台幣 (NT$)</label>
-          <input class="cf-in" id="cf-twd" type="number" placeholder="0">
+          <input class="cf-in" id="cf-twd" type="number" placeholder="自行填入">
         </div>
       </div>
       <label class="cf-lbl">天數 Day</label>
@@ -523,9 +524,11 @@ body::before{
 
 <script>
 // ── CONFIG ────────────────────────────────────────────
-// Notion proxy — 填入你的 Cloudflare Worker URL（見下方 worker.js）
 const NOTION_WORKER_URL = 'https://traveluse.jouyu-chen-jc.workers.dev';
 const NOTION_DB_ID = '14f85e19d1c681adb0aded1cb7b14eab';
+// 備用：直接呼叫 Notion API（Worker 失敗時自動切換）
+// 如需啟用，到 https://www.notion.so/my-integrations 取得 token 後填入
+const NOTION_DIRECT_TOKEN = '';
 
 // ── ITINERARY ─────────────────────────────────────────
 const DAYS = {
@@ -808,14 +811,29 @@ function toggleHideRecord(idx){
   r.hidden=!r.hidden; saveCostLocal(); loadCostTotals();
 }
 function deleteRecord(idx){
-  if(!confirm('確定要刪除這筆紀錄嗎？'))return;
-  costRecords.splice(idx,1); saveCostLocal(); loadCostTotals();
+  // confirm() is blocked on GitHub Pages — use inline two-step
+  const btn=document.querySelector(`#cr-${idx} .cr-btn.del`);
+  if(!btn)return;
+  if(btn.dataset.confirm==='1'){
+    costRecords.splice(idx,1); saveCostLocal(); loadCostTotals();
+  } else {
+    btn.dataset.confirm='1';
+    btn.textContent='確定？';
+    btn.style.background='rgba(192,112,112,0.22)';
+    setTimeout(()=>{
+      if(btn.dataset.confirm==='1'){
+        btn.dataset.confirm='';btn.textContent='刪除';btn.style.background='';
+      }
+    },2500);
+  }
 }
 
-function calcTwd(){
+function showJpyHint(){
   const j=parseFloat(document.getElementById('cf-jpy').value)||0;
   const r=parseFloat(document.getElementById('cf-rate').value)||0.21;
-  if(j>0) document.getElementById('cf-twd').value=Math.round(j*r);
+  const hint=document.getElementById('jpy-hint');
+  if(!hint)return;
+  hint.textContent=j>0?`約 NT$ ${Math.round(j*r).toLocaleString()}`:'';
 }
 
 async function saveCost(){
@@ -846,19 +864,37 @@ async function saveCost(){
       '國家城市':{select:{name:'日本'}},
       '封存此趟行程':{checkbox:false},
       '日期':{date:{start:dateMap[day]}},
+      '付款方式':{select:{name:pay}},
     }
   };
   if(jpy!==null) payload.properties['開銷紀錄 (外幣)']={number:jpy};
   if(twd!==null) payload.properties['開銷紀錄（台幣）']={number:twd};
   try{
-    const res=await fetch(NOTION_WORKER_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({action:'create',payload})
-    });
-    if(!res.ok) throw new Error(await res.text());
+    let res;
+    // 先試 Worker proxy
+    try{
+      res=await fetch(NOTION_WORKER_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({action:'create',payload})
+      });
+      if(!res.ok) throw new Error('worker:'+res.status);
+    }catch(workerErr){
+      // Worker 失敗 → 若有填 NOTION_DIRECT_TOKEN 就直接打 Notion API
+      if(!NOTION_DIRECT_TOKEN) throw workerErr;
+      res=await fetch('https://api.notion.com/v1/pages',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer '+NOTION_DIRECT_TOKEN,
+          'Notion-Version':'2022-06-28',
+        },
+        body:JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('direct:'+res.status);
+    }
     showMsg('✓ 已儲存到 Notion！');
-  }catch(e){showMsg('本地已記錄，Notion 同步失敗',true);}
+  }catch(e){showMsg('本地已記錄，Notion 同步失敗',true);console.error(e);}
 
   btn.disabled=false;btn.textContent='Save to Notion';
   ['cf-name','cf-jpy','cf-twd','cf-note'].forEach(id=>document.getElementById(id).value='');
