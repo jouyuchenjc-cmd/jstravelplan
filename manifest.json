@@ -1,7 +1,7 @@
 {
-  "name": "Osaka Trip",
-  "short_name": "Osaka",
-  "description": "Triple.Cell 大阪旅行行程 App",
+  "name": "Tokyo and Aomori Trip",
+  "short_name": "Tokyo/Aomori",
+  "description": "Triple.Cell 東京・青森旅行行程 App",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
