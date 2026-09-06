@@ -510,13 +510,14 @@ function renderDay(key){
   let html=`<div class="ov-card"><div class="ov-lbl">Overview · ${dtLbl}</div><div class="ov-text">${d.overview}</div></div>`;
   const pending=[],done=[];
   d.items.forEach((item,i)=>{const ik=item.id||i;(arrivedSet[`${key}:${ik}`]?done:pending).push({item,i,ik});});
+  const doneLabel=key==='第0天'?'已完成':'已抵達';
   const mkCard=({item,i,ik})=>{
     const isArrived=!!arrivedSet[`${key}:${ik}`];
     const num=String(i+1).padStart(2,'0');
     const mapBtn=item.lat?`<a class="spot-map" href="https://maps.google.com/maps?q=${item.lat},${item.lng}" target="_blank">Maps</a>`:'';
     const busBtn=item.busUrl?`<a class="spot-map" href="${item.busUrl}" target="_blank" style="margin-left:6px">Bus 時刻表</a>`:'';
     const ttBtn=item.ttUrl?`<a class="spot-map" href="${item.ttUrl}" target="_blank" style="margin-left:6px">南海時刻表</a>`:'';
-    const arrivedBtn=`<span class="spot-arrived-btn" onclick="toggleArrived('${key}','${ik}')">${isArrived?'↩ 取消':'✓ 已抵達'}</span>`;
+    const arrivedBtn=`<span class="spot-arrived-btn" onclick="toggleArrived('${key}','${ik}')">${isArrived?'↩ 取消':`✓ ${doneLabel}`}</span>`;
     const uNote=getUnote(key,ik);
     const noteToggle=`<span class="unote-toggle${uNote?' filled':''}" id="utbtn:${key}:${ik}" onclick="toggleUnote('${key}','${ik}')">${uNote?'備注 ✎':'+ 備注'}</span>`;
     const noteWrap=`<div class="unote-wrap" id="utwrap:${key}:${ik}" style="display:${uNote?'block':'none'}">
@@ -534,7 +535,7 @@ function renderDay(key){
   };
   pending.forEach(e=>{html+=mkCard(e);});
   if(done.length){
-    html+=`<div style="font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin:14px 0 8px;padding-left:2px">已抵達</div>`;
+    html+=`<div style="font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;font-weight:700;margin:14px 0 8px;padding-left:2px">${doneLabel}</div>`;
     done.forEach(e=>{html+=mkCard(e);});
   }
   body.innerHTML=html;body.scrollTop=0;
