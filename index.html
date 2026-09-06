@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Osaka Trip">
+<meta name="apple-mobile-web-app-title" content="Tokyo &amp; Aomori Trip">
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="theme-color" content="#f3eee8">
-<title>Osaka Trip</title>
+<title>Tokyo and Aomori Trip</title>
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -38,7 +38,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .home-meta{text-align:center;margin-top:8px}
 .home-dates{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--ink2);text-transform:uppercase}
 .home-sub{font-size:10px;color:var(--ink3);margin-top:2px;letter-spacing:2px}
-.home-title{font-size:42px;font-weight:700;letter-spacing:5px;line-height:1;margin-top:6px;background:linear-gradient(135deg,#e5e0de 0%,#a27577 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.home-title{font-size:32px;font-weight:700;letter-spacing:1.5px;line-height:1.2;margin-top:6px;background:linear-gradient(135deg,#e5e0de 0%,#a27577 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .nav-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:18px}
 .nav-btn{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:16px 15px;cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:all .18s;display:flex;flex-direction:column;gap:5px;box-shadow:0 2px 12px rgba(43,36,32,0.06)}
 .nav-btn:active{transform:scale(.96);background:rgba(255,255,255,0.82)}
@@ -182,13 +182,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 <div id="home" class="screen active">
   <div class="home-ill"><img src="illustration.png" alt="Triple.Cell" draggable="false"></div>
   <div class="home-meta">
-    <div class="home-dates">04.11 (Sat) — 04.16 (Thu)</div>
-    <div class="home-sub">OSAKA, JAPAN</div>
-    <div class="home-title">OSAKA</div>
+    <div class="home-dates">09.25 (Fri) — 10.04 (Sun)</div>
+    <div class="home-sub">TOKYO・AOMORI, JAPAN</div>
+    <div class="home-title">Japan 10 Days</div>
   </div>
   <div class="nav-grid">
-    <div class="nav-btn" onclick="go('flight')"><div class="nb-icon">01</div><div class="nb-label">Flight Info</div><div class="nb-sub">CI 0152 / CI 0173</div></div>
-    <div class="nav-btn" onclick="go('day')"><div class="nb-icon">02</div><div class="nb-label">Day</div><div class="nb-sub">行程 Day 01–06</div></div>
+    <div class="nav-btn" onclick="go('flight')"><div class="nb-icon">01</div><div class="nb-label">Flight Info</div><div class="nb-sub">Joy · Milla</div></div>
+    <div class="nav-btn" onclick="go('day')"><div class="nb-icon">02</div><div class="nb-label">Day</div><div class="nb-sub">行程 Day 01–10</div></div>
     <div class="nav-btn" onclick="go('weather')"><div class="nb-icon">03</div><div class="nb-label">Weather</div><div class="nb-sub">即時天氣預報</div></div>
     <div class="nav-btn" onclick="go('cost')"><div class="nb-icon">04</div><div class="nb-label">Cost</div><div class="nb-sub">記錄花費</div></div>
   </div>
@@ -196,48 +196,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 
 <div id="flight" class="screen">
   <div class="s-header"><div class="back-btn" onclick="go('home')">←</div><div class="s-title">Flight Info</div></div>
-  <div class="s-body">
-    <div class="flight-card">
-      <div class="fc-tag">Outbound · 去程</div>
-      <div class="fc-route">
-        <div class="fc-airport"><div class="fc-iata">TPE</div><div class="fc-city">台北</div><div class="fc-terminal">T2</div></div>
-        <div class="fc-mid">
-          <div class="fc-line">
-            <div class="fc-dash"></div>
-            <svg class="fc-plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.5L13.5 11.5V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V11.5L2 16.5V18.5L10.5 16V20.5L8.5 22V23.5L12 22.5L15.5 23.5V22L13.5 20.5V16L22 18.5V16.5Z" fill="currentColor"/></svg>
-            <div class="fc-dash"></div>
-          </div>
-          <div class="fc-fno">CI 0152</div>
-        </div>
-        <div class="fc-airport"><div class="fc-iata">KIX</div><div class="fc-city">大阪</div><div class="fc-terminal">T1</div></div>
-      </div>
-      <div class="fc-times">
-        <div class="fc-t"><div class="fc-t-lbl">Depart</div><div class="fc-t-val">09:00</div><div class="fc-t-date">2026.04.11</div></div>
-        <div class="fc-t"><div class="fc-t-lbl">Arrive</div><div class="fc-t-val">12:50</div><div class="fc-t-date">2026.04.11</div></div>
-        <div class="fc-t"><div class="fc-t-lbl">Duration</div><div class="fc-t-val">3h 50m</div><div class="fc-t-date">China Airlines</div></div>
-      </div>
-    </div>
-    <div class="flight-card">
-      <div class="fc-tag">Return · 回程</div>
-      <div class="fc-route">
-        <div class="fc-airport"><div class="fc-iata">KIX</div><div class="fc-city">大阪</div><div class="fc-terminal">T1</div></div>
-        <div class="fc-mid">
-          <div class="fc-line">
-            <div class="fc-dash"></div>
-            <svg class="fc-plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.5L13.5 11.5V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V11.5L2 16.5V18.5L10.5 16V20.5L8.5 22V23.5L12 22.5L15.5 23.5V22L13.5 20.5V16L22 18.5V16.5Z" fill="currentColor"/></svg>
-            <div class="fc-dash"></div>
-          </div>
-          <div class="fc-fno">CI 0173</div>
-        </div>
-        <div class="fc-airport"><div class="fc-iata">TPE</div><div class="fc-city">台北</div><div class="fc-terminal">T2</div></div>
-      </div>
-      <div class="fc-times">
-        <div class="fc-t"><div class="fc-t-lbl">Depart</div><div class="fc-t-val">19:05</div><div class="fc-t-date">2026.04.16</div></div>
-        <div class="fc-t"><div class="fc-t-lbl">Arrive</div><div class="fc-t-val">21:10</div><div class="fc-t-date">2026.04.16</div></div>
-        <div class="fc-t"><div class="fc-t-lbl">Duration</div><div class="fc-t-val">2h 05m</div><div class="fc-t-date">China Airlines</div></div>
-      </div>
-    </div>
+  <div class="wx-loc-tabs" id="flightPersonTabs">
+    <div class="wlt active" data-person="Joy" onclick="setFlightPerson(this)">Joy</div>
+    <div class="wlt" data-person="Milla" onclick="setFlightPerson(this)">Milla</div>
   </div>
+  <div class="s-body" id="flightBody"></div>
 </div>
 
 <div id="day" class="screen">
@@ -250,9 +213,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
   <div class="s-header"><div class="back-btn" onclick="go('home')">←</div><div class="s-title">Weather</div></div>
   <div class="wx-loc-tabs">
     <div class="wlt active" onclick="setWxGeo(this)">現在位置</div>
-    <div class="wlt" data-name="大阪" data-lat="34.6937" data-lng="135.5023" onclick="setWxFixed(this)">大阪</div>
-    <div class="wlt" data-name="神戶" data-lat="34.6901" data-lng="135.1956" onclick="setWxFixed(this)">神戶</div>
-    <div class="wlt" data-name="京都" data-lat="35.0116" data-lng="135.7681" onclick="setWxFixed(this)">京都</div>
+    <div class="wlt" data-name="東京" data-lat="35.6762" data-lng="139.6503" onclick="setWxFixed(this)">東京</div>
+    <div class="wlt" data-name="青森" data-lat="40.8244" data-lng="140.7400" onclick="setWxFixed(this)">青森</div>
+    <div class="wlt" data-name="八戶" data-lat="40.5122" data-lng="141.4883" onclick="setWxFixed(this)">八戶</div>
+    <div class="wlt" data-name="弘前" data-lat="40.6031" data-lng="140.4640" onclick="setWxFixed(this)">弘前</div>
+    <div class="wlt" data-name="盛岡" data-lat="39.7036" data-lng="141.1527" onclick="setWxFixed(this)">盛岡</div>
+    <div class="wlt" data-name="鎌倉" data-lat="35.3197" data-lng="139.5466" onclick="setWxFixed(this)">鎌倉</div>
   </div>
   <div class="s-body"><div id="wxBox"><div class="wx-loading">載入中…</div></div></div>
 </div>
@@ -306,9 +272,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       </div>
       <label class="cf-lbl">天數 Day</label>
       <select class="cf-sel" id="cf-day">
-        <option value="第01天">第01天 · 04/11</option><option value="第02天">第02天 · 04/12</option>
-        <option value="第03天">第03天 · 04/13</option><option value="第04天">第04天 · 04/14</option>
-        <option value="第05天">第05天 · 04/15</option><option value="第06天">第06天 · 04/16</option>
+        <option value="第0天">第0天 · 行前準備</option>
+        <option value="第01天">第01天 · 09/25</option><option value="第02天">第02天 · 09/26</option>
+        <option value="第03天">第03天 · 09/27</option><option value="第04天">第04天 · 09/28</option>
+        <option value="第05天">第05天 · 09/29</option><option value="第06天">第06天 · 09/30</option>
+        <option value="第07天">第07天 · 10/01</option><option value="第08天">第08天 · 10/02</option>
+        <option value="第09天">第09天 · 10/03</option><option value="第10天">第10天 · 10/04</option>
       </select>
       <label class="cf-lbl">備註 Note</label>
       <input class="cf-in" id="cf-note" type="text" placeholder="選填">
@@ -324,52 +293,150 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 
 <script>
 const NOTION_WORKER_URL='https://traveluse.jouyu-chen-jc.workers.dev';
-const NOTION_DB_ID='14f85e19d1c681adb0aded1cb7b14eab';
+const NOTION_DB_ID='9c3d725a810f40a898fe1c2220cc8c52';
 const NOTION_DIRECT_TOKEN='';
 const NANKAI='https://www.nankai.co.jp/tc_railway/access-timetable?utm_source=fmo_tc&utm_medium=redirect&utm_campaign=access-timetable';
 
-const DAYS={
-  '第01天':{date:'2026-04-11',overview:'KIX 抵達 → 飯店 堺筋本町 → 中崎町探索',items:[
-    {name:'前往飯店',note:'① 南海空港急行 KIX → 難波（約 45 分）\n② 難波 → 地下鐵堺筋線 → 堺筋本町\n全程約 65–70 分鐘',lat:34.68249,lng:135.50565,ttUrl:NANKAI},
-    {name:'中崎町',note:'堺筋本町 → 堺筋線 → 天神橋筋六丁目\n→ 谷町線 → 中崎町（約 20–25 分鐘）',lat:34.70753,lng:135.51066},
-  ]},
-  '第02天':{date:'2026-04-12',overview:'石清水八幡宮 → 飛行神社 → 男山展望台 → 檀王法林寺（京都）→ 回大阪',items:[
-    {name:'出發 → 石清水八幡宮',note:'堺筋本町 → 中央線 → 本町 → 御堂筋線 → 淀屋橋\n淀屋橋 → 京阪本線特急 → 石清水八幡宮站\n約 70–80 分鐘',lat:34.8774,lng:135.70019},
-    {name:'石清水八幡宮站 → 纜車上山',note:'出站照「ケーブル」指標走（約5分）\n搭男山ケーブル（約3分）→ 直達山頂\n09:00 起每15分鐘一班 · 纜車需額外費用',lat:34.8774,lng:135.70019},
-    {name:'男山展望台',note:'看三川匯流（宇治川・桂川・木津川）',lat:34.8774,lng:135.70019},
-    {name:'飛行神社',note:'石清水八幡宮站 → 京阪電車 1 站 → 八幡市站\n近代航空 × 信仰主題神社',lat:34.8724,lng:135.7042},
-    {name:'檀王法林寺（京都三条）',note:'11:25 石清水八幡宮站發車 → 京阪本線特急\n12:01 三条站抵達（全程不用換車）\n12:05 出站步行即到，三條通向東約 30m\n\n12:05–13:00 境內自由參觀本堂\n12:00–13:00 午休時段，先在外面逛\n13:00–13:20 本堂參觀\n\n黑色招財貓與朱印在本堂旁事務所\n開放：9:00–12:00 / 13:00–16:00\n費用：本堂參拜 300 日幣\n\n記得也幫琦帶一隻黑色招財貓！',lat:35.00993,lng:135.77338},
-    {name:'回大阪',note:'三条 → 京阪本線 → 淀屋橋 → 御堂筋線 → 本町\n→ 中央線 → 堺筋本町',lat:34.68249,lng:135.50565},
-  ]},
-  '第03天':{date:'2026-04-13',overview:'08:00 出發神戶 → 北野異人館 → 舞子・明石海峽大橋 → 回大阪',items:[
-    {name:'08:00 出發 → 神戶三宮',note:'堺筋本町 → 中央線 → 本町 → 御堂筋線 → 梅田\nJR 大阪站 → 新快速 → 三宮\n全程約 55–65 分鐘',lat:34.6913,lng:135.1956},
-    {name:'北野異人館區',note:'從三宮站「北野坂」方向走上坡約 15–20 分鐘',lat:34.7033,lng:135.1874},
-    {name:'三宮 → 舞子（明石海峽大橋）',note:'JR 三宮站 → JR 新快速 → 舞子站\n約 20–25 分鐘',lat:34.6403,lng:135.0196},
-    {name:'舞子 → 大阪（回程）',note:'JR 舞子 → JR 新快速 → 大阪站\n→ 御堂筋線 → 本町 → 中央線 → 堺筋本町\n約 45 分鐘',lat:34.68249,lng:135.50565},
-  ]},
-  '第04天':{date:'2026-04-14',overview:'舞洲海濱公園 → 返回市區午餐 → 住吉大社 → 回住宿',items:[
-    {name:'前往舞洲海濱公園',note:'① 堺筋本町 → 中央線 → コスモスクエア（約20分）\n② コスモスクエア → 舞洲アクティブバス\n→ 舞洲スポーツアイランド（約15分）',lat:34.6636,lng:135.4354},
-    {name:'返回市區 + 午餐',note:'舞洲緑地前 → 北港観光バス 2系統（¥230 約13分）→ 桜島駅\nJRゆめ咲線 → 西九条 → 環状線 → 新今宮\n南海本線 → 住吉大社駅',busUrl:'http://hokkohbus.co.jp/route/active',lat:null,lng:null},
-    {name:'住吉大社',note:'住吉大社駅から步行約3分\n太鼓橋（反橋）・住吉造本殿',lat:34.61281,lng:135.49313},
-    {name:'回大阪住宿',note:'住吉大社駅 → 南海本線 → 難波\n御堂筋線 → 本町 → 中央線 → 堺筋本町',lat:34.68249,lng:135.50565},
-  ]},
-  '第05天':{date:'2026-04-15',overview:'勝尾寺 → 中之島公園 → 大阪市中央公會堂 → 回住宿',items:[
-    {name:'勝尾寺',note:'① 堺筋本町 → 中央線 → 本町\n② 本町 → 御堂筋線 → 千里中央（終點）\n③ 千里中央 → 阪急巴士（往勝尾寺）\n約 80–90 分鐘（含等車）',lat:34.8596,lng:135.5047},
-    {name:'中之島公園',note:'薔薇花季・水邊散步',lat:34.69249,lng:135.50764},
-    {name:'大阪市中央公會堂',note:'歐式建築 · 中之島象徵',lat:34.69353,lng:135.50398},
-    {name:'回大阪住宿',note:'中之島 → 地下鐵肥後橋 → 本町 → 堺筋本町',lat:34.68249,lng:135.50565},
-  ]},
-  '第06天':{date:'2026-04-16',overview:'大鳥大社 → 前往 KIX · 19:05 CI0173 回台',items:[
-    {name:'大鳥大社',note:'① 堺筋本町 → 中央線 → 本町\n② 本町 → 御堂筋線 → なんば\n③ 難波 → 南海本線 → 鳳站\n約 50–60 分鐘',lat:34.53659,lng:135.46056},
-    {name:'前往 KIX 機場',note:'鳳站 → 南海本線 → 難波 → 南海空港線 → KIX\n建議 16:00 前抵達機場',lat:34.4347,lng:135.2440,ttUrl:NANKAI},
-  ]},
+// DAY — 即時從 Notion 資料庫抓取（透過 Worker，見 repo 裡的 worker.js）。
+// 已知景點的座標對照表，Notion 裡沒有存座標，靠名稱關鍵字比對加上 Maps 按鈕。
+const SPOT_COORDS=[
+  [['晴空塔'],35.7101,139.8107],
+  [['A-FACTORY'],40.8266,140.7377],
+  [['淺蟲溫泉'],40.8927,140.8730],
+  [['蘋果公園'],40.5967,140.4103],
+  [['藤田記念庭園'],40.6083,140.4636],
+  [['蕪島神社'],40.5285,141.5732],
+  [['種差海岸'],40.5375,141.5975],
+  [['淨土之濱'],39.6538,141.9793],
+  [['烏森神社'],35.6664,139.7581],
+  [['鎌倉'],35.3197,139.5466],
+  [['江之島'],35.2989,139.4801],
+  [['淺草'],35.7148,139.7967],
+  [['今戶神社'],35.7208,139.8058],
+  [['国立新美術館','國立新美術館'],35.6657,139.7262],
+];
+function findCoords(name){
+  for(const [keys,lat,lng] of SPOT_COORDS){if(keys.some(k=>name.includes(k)))return{lat,lng};}
+  return{};
+}
+function cleanNotionText(s){return s?s.replace(/\*\*/g,'').replace(/<br\s*\/?>/gi,'\n').trim():'';}
+function notionPlain(prop){if(!prop)return'';return(prop.title||prop.rich_text||[]).map(t=>t.plain_text).join('');}
+
+let DAYS={};
+let DAY_ORDER=[];
+const DAYS_CACHE_KEY='trip_days_cache_v1';
+
+function buildDaysFromRows(rows){
+  const groups={};
+  rows.forEach(row=>{
+    const p=row.properties||{};
+    if(p['封存此趟行程']?.checkbox)return;
+    const country=p['國家城市']?.select?.name;
+    if(country&&country!=='日本')return;
+    const dayKey=p['旅途的第幾天']?.select?.name;
+    if(!dayKey)return;
+    const name=cleanNotionText(notionPlain(p['Name']));
+    if(!name)return;
+    let note=cleanNotionText(notionPlain(p['備註']));
+    const address=cleanNotionText(notionPlain(p['地址']));
+    const arrive=p['抵達方式']?.select?.name;
+    const prefix=[arrive,address].filter(Boolean).join(' · ');
+    if(prefix)note=note?`${prefix}\n${note}`:prefix;
+    const date=p['日期']?.date?.start||null;
+    if(!groups[dayKey])groups[dayKey]={date:null,items:[]};
+    if(date&&!groups[dayKey].date)groups[dayKey].date=date;
+    groups[dayKey].items.push({id:row.id,name,note:note||undefined,_ct:row.created_time||'',...findCoords(name)});
+  });
+  Object.values(groups).forEach(g=>g.items.sort((a,b)=>a._ct<b._ct?-1:a._ct>b._ct?1:0));
+  const order=Object.keys(groups).sort((a,b)=>{
+    const na=parseInt((a.match(/\d+/)||['0'])[0],10);
+    const nb=parseInt((b.match(/\d+/)||['0'])[0],10);
+    return na-nb;
+  });
+  const days={};
+  order.forEach(k=>{
+    const g=groups[k];
+    days[k]={date:g.date,overview:g.items.map(i=>i.name).join(' → ')||'（尚無行程）',items:g.items};
+  });
+  return{days,order};
+}
+async function fetchDaysFromNotion(){
+  const res=await fetch(NOTION_WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list',database_id:NOTION_DB_ID})});
+  const data=await res.json();
+  if(!res.ok||data.error)throw new Error(data.error||('worker:'+res.status));
+  return data.results||[];
+}
+async function loadDays(){
+  const cacheRaw=localStorage.getItem(DAYS_CACHE_KEY);
+  if(cacheRaw&&!DAY_ORDER.length){
+    try{const c=JSON.parse(cacheRaw);DAYS=c.DAYS;DAY_ORDER=c.DAY_ORDER;buildDayTabs();}catch{}
+  }
+  try{
+    const rows=await fetchDaysFromNotion();
+    const{days,order}=buildDaysFromRows(rows);
+    if(order.length){
+      DAYS=days;DAY_ORDER=order;
+      localStorage.setItem(DAYS_CACHE_KEY,JSON.stringify({DAYS,DAY_ORDER}));
+      buildDayTabs();
+    }else if(!DAY_ORDER.length){
+      document.getElementById('dayBody').innerHTML='<div class="cr-empty">Notion 裡還沒有找到行程資料</div>';
+    }
+  }catch(e){
+    console.error(e);
+    if(!DAY_ORDER.length)document.getElementById('dayBody').innerHTML='<div class="cr-empty">無法連線到行程資料，請檢查網路後回上一頁再試一次</div>';
+  }
+}
+
+// FLIGHT
+const FLIGHTS={
+  Joy:{
+    out:{tag:'Outbound · 去程',fromIata:'TPE',fromCity:'台北',toIata:'NRT',toCity:'東京',fno:'CI 100',dep:'08:50',arr:'13:15',date:'2026.09.25',dur:'4h 25m',airline:'China Airlines'},
+    ret:{tag:'Return · 回程',fromIata:'NRT',fromCity:'東京',toIata:'TPE',toCity:'台北',fno:'CI 105',dep:'17:55',arr:'20:35',date:'2026.10.04',dur:'2h 40m',airline:'China Airlines'},
+  },
+  Milla:{
+    out:{tag:'Outbound · 去程',fromIata:'TFU',fromCity:'成都',toIata:'NRT',toCity:'東京',fno:'3U 3961',dep:'09:25',arr:'15:10',date:'2026.09.25',dur:'5h 45m',airline:'四川航空 Sichuan Airlines'},
+    ret:{tag:'Return · 回程',fromIata:'NRT',fromCity:'東京',toIata:'TFU',toCity:'成都',fno:'3U 3962',dep:'16:40',arr:'21:00',date:'2026.10.04',dur:'4h 20m',airline:'四川航空 Sichuan Airlines'},
+  },
 };
-const DAY_ORDER=['第01天','第02天','第03天','第04天','第05天','第06天'];
+let activeFlightPerson='Joy';
+function flightCard(leg){
+  return`<div class="flight-card">
+    <div class="fc-tag">${leg.tag}</div>
+    <div class="fc-route">
+      <div class="fc-airport"><div class="fc-iata">${leg.fromIata}</div><div class="fc-city">${leg.fromCity}</div></div>
+      <div class="fc-mid">
+        <div class="fc-line">
+          <div class="fc-dash"></div>
+          <svg class="fc-plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.5L13.5 11.5V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V11.5L2 16.5V18.5L10.5 16V20.5L8.5 22V23.5L12 22.5L15.5 23.5V22L13.5 20.5V16L22 18.5V16.5Z" fill="currentColor"/></svg>
+          <div class="fc-dash"></div>
+        </div>
+        <div class="fc-fno">${leg.fno}</div>
+      </div>
+      <div class="fc-airport"><div class="fc-iata">${leg.toIata}</div><div class="fc-city">${leg.toCity}</div></div>
+    </div>
+    <div class="fc-times">
+      <div class="fc-t"><div class="fc-t-lbl">Depart</div><div class="fc-t-val">${leg.dep}</div><div class="fc-t-date">${leg.date}</div></div>
+      <div class="fc-t"><div class="fc-t-lbl">Arrive</div><div class="fc-t-val">${leg.arr}</div><div class="fc-t-date">${leg.date}</div></div>
+      <div class="fc-t"><div class="fc-t-lbl">Duration</div><div class="fc-t-val">${leg.dur}</div><div class="fc-t-date">${leg.airline}</div></div>
+    </div>
+  </div>`;
+}
+function renderFlight(person){
+  activeFlightPerson=person;
+  const f=FLIGHTS[person];
+  document.getElementById('flightBody').innerHTML=flightCard(f.out)+flightCard(f.ret);
+}
+function setFlightPerson(el){
+  document.querySelectorAll('#flightPersonTabs .wlt').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  renderFlight(el.dataset.person);
+}
 
 function go(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if(id==='day'&&!document.getElementById('dayTabs').children.length) buildDayTabs();
+  if(id==='flight') renderFlight(activeFlightPerson);
+  if(id==='day') loadDays();
   if(id==='weather') loadWx();
   if(id==='cost') loadCostTotals();
 }
@@ -407,12 +474,15 @@ function toggleUnote(key,i){
     }
   }
 }
+let dayTabsBuilt=false;
 function buildDayTabs(){
   const today=new Date().toISOString().slice(0,10);
   let auto=DAY_ORDER[0];
   for(const k of DAY_ORDER){if(DAYS[k]?.date===today){auto=k;break;}}
-  activeDay=auto;
+  if(!dayTabsBuilt||!DAY_ORDER.includes(activeDay))activeDay=auto;
+  dayTabsBuilt=true;
   const wrap=document.getElementById('dayTabs');
+  wrap.innerHTML='';
   DAY_ORDER.forEach(key=>{
     const d=DAYS[key];
     const num=key.replace('第','').replace('天','');
@@ -420,7 +490,7 @@ function buildDayTabs(){
     const el=document.createElement('div');
     el.className='dt'+(key===activeDay?' active':'');
     el.dataset.key=key;
-    el.innerHTML=`<div class="dt-lbl">DAY</div><div class="dt-num">${num}</div><div class="dt-date">${m||''}/${dd||''}</div>`;
+    el.innerHTML=`<div class="dt-lbl">DAY</div><div class="dt-num">${num}</div><div class="dt-date">${d.date?`${m||''}/${dd||''}`:'PREP'}</div>`;
     el.onclick=()=>pickDay(key);
     wrap.appendChild(el);
   });
@@ -436,23 +506,22 @@ function renderDay(key){
   const body=document.getElementById('dayBody');
   const d=DAYS[key];if(!d)return;
   const DZL=['日','一','二','三','四','五','六'];
-  const dt=new Date(d.date);
-  const dtLbl=`${dt.getMonth()+1}月${dt.getDate()}日（${DZL[dt.getDay()]}）`;
+  const dtLbl=d.date?(dt=>`${dt.getMonth()+1}月${dt.getDate()}日（${DZL[dt.getDay()]}）`)(new Date(d.date)):'行前準備';
   let html=`<div class="ov-card"><div class="ov-lbl">Overview · ${dtLbl}</div><div class="ov-text">${d.overview}</div></div>`;
   const pending=[],done=[];
-  d.items.forEach((item,i)=>{(arrivedSet[`${key}:${i}`]?done:pending).push({item,i});});
-  const mkCard=({item,i})=>{
-    const isArrived=!!arrivedSet[`${key}:${i}`];
+  d.items.forEach((item,i)=>{const ik=item.id||i;(arrivedSet[`${key}:${ik}`]?done:pending).push({item,i,ik});});
+  const mkCard=({item,i,ik})=>{
+    const isArrived=!!arrivedSet[`${key}:${ik}`];
     const num=String(i+1).padStart(2,'0');
     const mapBtn=item.lat?`<a class="spot-map" href="https://maps.google.com/maps?q=${item.lat},${item.lng}" target="_blank">Maps</a>`:'';
     const busBtn=item.busUrl?`<a class="spot-map" href="${item.busUrl}" target="_blank" style="margin-left:6px">Bus 時刻表</a>`:'';
     const ttBtn=item.ttUrl?`<a class="spot-map" href="${item.ttUrl}" target="_blank" style="margin-left:6px">南海時刻表</a>`:'';
-    const arrivedBtn=`<span class="spot-arrived-btn" onclick="toggleArrived('${key}',${i})">${isArrived?'↩ 取消':'✓ 已抵達'}</span>`;
-    const uNote=getUnote(key,i);
-    const noteToggle=`<span class="unote-toggle${uNote?' filled':''}" id="utbtn:${key}:${i}" onclick="toggleUnote('${key}',${i})">${uNote?'備注 ✎':'+ 備注'}</span>`;
-    const noteWrap=`<div class="unote-wrap" id="utwrap:${key}:${i}" style="display:${uNote?'block':'none'}">
-      <textarea class="unote-textarea" placeholder="隨手記一下，自動儲存…" oninput="onUnoteInput('${key}',${i},this)">${uNote.replace(/</g,'&lt;')}</textarea>
-      <div class="unote-saved" id="utsvd:${key}:${i}">已儲存</div>
+    const arrivedBtn=`<span class="spot-arrived-btn" onclick="toggleArrived('${key}','${ik}')">${isArrived?'↩ 取消':'✓ 已抵達'}</span>`;
+    const uNote=getUnote(key,ik);
+    const noteToggle=`<span class="unote-toggle${uNote?' filled':''}" id="utbtn:${key}:${ik}" onclick="toggleUnote('${key}','${ik}')">${uNote?'備注 ✎':'+ 備注'}</span>`;
+    const noteWrap=`<div class="unote-wrap" id="utwrap:${key}:${ik}" style="display:${uNote?'block':'none'}">
+      <textarea class="unote-textarea" placeholder="隨手記一下，自動儲存…" oninput="onUnoteInput('${key}','${ik}',this)">${uNote.replace(/</g,'&lt;')}</textarea>
+      <div class="unote-saved" id="utsvd:${key}:${ik}">已儲存</div>
     </div>`;
     const note=item.note?`<div class="spot-note">${item.note.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div>`:'';
     return`<div class="spot-card${isArrived?' arrived':''}">
@@ -616,7 +685,7 @@ function renderCostRecords(){
   const hasRecords=costRecords.length>0;
   // Tab bar
   const tabDays=['全部',...DAY_ORDER.filter(d=>groups[d])];
-  const dateShort={'第01天':'04/11','第02天':'04/12','第03天':'04/13','第04天':'04/14','第05天':'04/15','第06天':'04/16'};
+  const dateShort={'第0天':'行前','第01天':'09/25','第02天':'09/26','第03天':'09/27','第04天':'09/28','第05天':'09/29','第06天':'09/30','第07天':'10/01','第08天':'10/02','第09天':'10/03','第10天':'10/04'};
   let tabHtml='<div class="cr-day-tabs">';
   tabDays.forEach(d=>{
     const lbl=d==='全部'?'全部':dateShort[d]||d;
@@ -692,7 +761,7 @@ async function saveCost(){
   const day=document.getElementById('cf-day').value;
   const pay=document.getElementById('cf-pay').value;
   const note=document.getElementById('cf-note').value.trim();
-  const dateMap={'第01天':'2026-04-11','第02天':'2026-04-12','第03天':'2026-04-13','第04天':'2026-04-14','第05天':'2026-04-15','第06天':'2026-04-16'};
+  const dateMap={'第0天':'2026-09-24','第01天':'2026-09-25','第02天':'2026-09-26','第03天':'2026-09-27','第04天':'2026-09-28','第05天':'2026-09-29','第06天':'2026-09-30','第07天':'2026-10-01','第08天':'2026-10-02','第09天':'2026-10-03','第10天':'2026-10-04'};
   const btn=document.getElementById('saveBtn');
   btn.disabled=true;btn.innerHTML='<span class="spin"></span> 儲存中…';showMsg('');
   costRecords.push({name,jpy:jpy||0,twd:twd||0,day,pay,note,ts:Date.now()});
